@@ -1,10 +1,12 @@
 CREATE TABLE WTFuser
 (
+UserID int,
 LastName varchar(255),
 FirstName varchar(255),
 username varchar(255),
 email varchar(255),
-password varchar(255)
+password varchar(255),
+Primary key (UserID)
 );
 CREATE TABLE WTFuser1
 (
