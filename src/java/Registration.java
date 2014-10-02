@@ -16,6 +16,7 @@ import javax.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
+import static java.sql.DriverManager.getConnection;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,15 +50,10 @@ public class Registration extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
-            Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            Statement stmt=conn.createStatement();
-            String query2 = "INSERT INTO IS2560.WTFuser (LASTNAME,FIRSTNAME,USERNAME,EMAIL,PASSWORD) VALUES ('"+Lname+"','"+Fname+"','"+user+"','"+Email+"','"+pass+"')";
-            stmt.executeUpdate(query2);
-            stmt.close();
-            out.print("Connection Successful!");
-            RequestDispatcher rd=request.getRequestDispatcher("task_login.jsp");
-            rd.forward(request, response);
-            conn.close();
+                try (Connection conn = getConnection(connectionURL, "IS2560", "IS2560"); Statement stmt = conn.createStatement()) {
+                    String query2 = "INSERT INTO IS2560.WTFuser (LASTNAME,FIRSTNAME,USERNAME,EMAIL,PASSWORD) VALUES ('"+Lname+"','"+Fname+"','"+user+"','"+Email+"','"+pass+"')";
+                    stmt.executeUpdate(query2);
+                }
         }
         catch(SQLException ex)
         {

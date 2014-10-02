@@ -3,7 +3,7 @@
     Created on : Sep 28, 2014, 10:04:11 PM
     Author     : visheshtalreja
 --%>
-
+<!-- dummy comment-->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html lang="en">
@@ -183,11 +183,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-	
-	<script>
-	
-		
-		
-	</script>
   </body>
 </html>

@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import static java.lang.System.out;
 import java.sql.*;
 import java.sql.DriverManager;
+import static java.sql.DriverManager.getConnection;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,29 +61,30 @@ public class Login extends HttpServlet {
         try (PrintWriter out = response.getWriter()){
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
-            Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            String query1 = "SELECT * FROM WTFuser where username = '"+user+"'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query1);
-            //HttpServletResponse.sendRedirect("/your/new/location.jsp")
-            while(rs.next())
-            {
-                if(rs.getString("password").equals(pass) && user!=null)
-                {
-                    out.println("Welcome "+rs.getString("FirstName"));
-                    request.setAttribute("Name",rs.getString("FirstName"));
-                    RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
-                    rd.forward(request, response);
+                try (Connection conn = getConnection(connectionURL, "IS2560", "IS2560")) {
+                    String query1 = "SELECT * FROM WTFuser where username = '"+user+"'";
+                    ResultSet rs;
+                    try (Statement st = conn.createStatement()) {
+                        rs = st.executeQuery(query1);
+                        //HttpServletResponse.sendRedirect("/your/new/location.jsp")
+                        while(rs.next())
+                        {
+                            if(rs.getString("password").equals(pass) && user!=null)
+                            {
+                                out.println("Welcome "+rs.getString("FirstName"));
+                                request.setAttribute("Name",rs.getString("FirstName"));
+                                RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
+                                rd.forward(request, response);
+                            }
+                            else
+                            {
+                                RequestDispatcher rm=request.getRequestDispatcher("faulty_login.jsp");
+                                rm.forward(request, response);
+                            }
+                        }
+                    }
+                    rs.close();
                 }
-                else
-                {
-                    RequestDispatcher rm=request.getRequestDispatcher("faulty_login.jsp");
-                    rm.forward(request, response);
-                }
-            }
-            st.close();
-            rs.close();
-            conn.close();
             
         }
         catch(SQLException ex)

@@ -222,12 +222,6 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n");
       out.write("    <!-- Include all compiled plugins (below), or include individual files as needed -->\n");
       out.write("    <script src=\"js/bootstrap.min.js\"></script>\n");
-      out.write("\t\n");
-      out.write("\t<script>\n");
-      out.write("\t\n");
-      out.write("\t\t\n");
-      out.write("\t\t\n");
-      out.write("\t</script>\n");
       out.write("  </body>\n");
       out.write("</html>");
     } catch (Throwable t) {
