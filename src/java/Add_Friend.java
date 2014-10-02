@@ -5,6 +5,9 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.*;
 import javax.mail.*;
+import static javax.mail.Message.RecipientType.TO;
+import static javax.mail.Session.getInstance;
+import static javax.mail.Transport.send;
 import javax.mail.internet.*;
 import javax.servlet.annotation.WebServlet;
 
@@ -29,8 +32,8 @@ public class Add_Friend extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        String user = "crib.notifications@gmail.com";
-        String pass = "firewaterthunder";
+        final String user = "crib.notifications@gmail.com";
+        final String pass = "firewaterthunder";
         String to = "aashishkanade@gmail.com";
         String sub = "Checking servlet";
         String body = "And the Servlet Works";
@@ -40,17 +43,17 @@ public class Add_Friend extends HttpServlet {
         props.put("mail.smtp.auth","true");
         props.put("mail.smtp.starttls.enable","true");
         
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+        Session session = getInstance(props, new javax.mail.Authenticator() {
 @Override
 protected PasswordAuthentication getPasswordAuthentication(){return new PasswordAuthentication(user,pass);}});
         try{
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(user));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+            message.addRecipient(TO, new InternetAddress(to));
             message.setSubject(sub);
             message.setText(body);
             
-            Transport.send(message);
+            send(message);
         }
         catch(Exception e){
             e.printStackTrace();
