@@ -60,6 +60,7 @@ public class Login extends HttpServlet {
         try (PrintWriter out = response.getWriter()){
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
+            
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
             String query1 = "SELECT * FROM WTFuser where username = '"+user+"'";
             Statement st = conn.createStatement();
@@ -67,6 +68,7 @@ public class Login extends HttpServlet {
             //HttpServletResponse.sendRedirect("/your/new/location.jsp")
             while(rs.next())
             {
+                
                 if(rs.getString("password").equals(pass) && user!=null)
                 {
                     out.println("Welcome "+rs.getString("FirstName"));

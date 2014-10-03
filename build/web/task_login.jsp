@@ -72,9 +72,9 @@
 		
 					<div class="win" id="log">
 						<img src="img/logo.jpg" style="height:20%;"/><br><br>
-						<form role="form" class="form-inline">
+                                                <form role="form" class="form-inline" method="get" action="Login">
 						  <div class="form-group">
-							<input type="email" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
+							<input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
 						  </div>
 						  <div id="break">
 							<br>
@@ -97,12 +97,12 @@
 		
 					<div class="win" id="reg">
 						<img src="img/logo.jpg" style="height:20%;"/><br><br>
-						<form role="form" class="form-inline">
+						<form role="form" class="form-inline" method="get" action="Registration">
 						  <div class="form-group">
-							<input type="email" name="fname" class="form-control" id="exampleInputEmail1" placeholder="First Name">
+							<input type="text" name="fname" class="form-control" id="exampleInputEmail1" placeholder="First Name">
 						  </div>
 						  <div class="form-group">
-							<input type="email" name="lname" class="form-control" id="exampleInputEmail1" placeholder="Last Name">
+							<input type="text" name="lname" class="form-control" id="exampleInputEmail1" placeholder="Last Name">
 						  </div>
 						  <div id="break">
 							<br>
@@ -111,7 +111,7 @@
 							<input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email address">
 						  </div>
 						  <div class="form-group">
-							<input type="email" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
+							<input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
 						  </div>
 						  <div id="break">
 							<br>
@@ -134,8 +134,6 @@
 						  </div>
 						</form>
 					</div>
-				  
-				
 
 			</div>
 

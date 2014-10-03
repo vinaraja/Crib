@@ -111,9 +111,9 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\t\t\n");
       out.write("\t\t\t\t\t<div class=\"win\" id=\"log\">\n");
       out.write("\t\t\t\t\t\t<img src=\"img/logo.jpg\" style=\"height:20%;\"/><br><br>\n");
-      out.write("\t\t\t\t\t\t<form role=\"form\" class=\"form-inline\">\n");
+      out.write("                                                <form role=\"form\" class=\"form-inline\" method=\"get\" action=\"Login\">\n");
       out.write("\t\t\t\t\t\t  <div class=\"form-group\">\n");
-      out.write("\t\t\t\t\t\t\t<input type=\"email\" name=\"username\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Username\">\n");
+      out.write("\t\t\t\t\t\t\t<input type=\"text\" name=\"username\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Username\">\n");
       out.write("\t\t\t\t\t\t  </div>\n");
       out.write("\t\t\t\t\t\t  <div id=\"break\">\n");
       out.write("\t\t\t\t\t\t\t<br>\n");
@@ -136,12 +136,12 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\t\t\n");
       out.write("\t\t\t\t\t<div class=\"win\" id=\"reg\">\n");
       out.write("\t\t\t\t\t\t<img src=\"img/logo.jpg\" style=\"height:20%;\"/><br><br>\n");
-      out.write("\t\t\t\t\t\t<form role=\"form\" class=\"form-inline\">\n");
+      out.write("\t\t\t\t\t\t<form role=\"form\" class=\"form-inline\" method=\"get\" action=\"Registration\">\n");
       out.write("\t\t\t\t\t\t  <div class=\"form-group\">\n");
-      out.write("\t\t\t\t\t\t\t<input type=\"email\" name=\"fname\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"First Name\">\n");
+      out.write("\t\t\t\t\t\t\t<input type=\"text\" name=\"fname\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"First Name\">\n");
       out.write("\t\t\t\t\t\t  </div>\n");
       out.write("\t\t\t\t\t\t  <div class=\"form-group\">\n");
-      out.write("\t\t\t\t\t\t\t<input type=\"email\" name=\"lname\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Last Name\">\n");
+      out.write("\t\t\t\t\t\t\t<input type=\"text\" name=\"lname\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Last Name\">\n");
       out.write("\t\t\t\t\t\t  </div>\n");
       out.write("\t\t\t\t\t\t  <div id=\"break\">\n");
       out.write("\t\t\t\t\t\t\t<br>\n");
@@ -150,7 +150,7 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\t\t\t\t\t\t\t<input type=\"email\" name=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Email address\">\n");
       out.write("\t\t\t\t\t\t  </div>\n");
       out.write("\t\t\t\t\t\t  <div class=\"form-group\">\n");
-      out.write("\t\t\t\t\t\t\t<input type=\"email\" name=\"username\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Username\">\n");
+      out.write("\t\t\t\t\t\t\t<input type=\"text\" name=\"username\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Username\">\n");
       out.write("\t\t\t\t\t\t  </div>\n");
       out.write("\t\t\t\t\t\t  <div id=\"break\">\n");
       out.write("\t\t\t\t\t\t\t<br>\n");
@@ -173,8 +173,6 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\t\t\t\t\t\t  </div>\n");
       out.write("\t\t\t\t\t\t</form>\n");
       out.write("\t\t\t\t\t</div>\n");
-      out.write("\t\t\t\t  \n");
-      out.write("\t\t\t\t\n");
       out.write("\n");
       out.write("\t\t\t</div>\n");
       out.write("\n");
