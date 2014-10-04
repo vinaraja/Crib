@@ -89,7 +89,7 @@
 		  </div><!-- /.container-fluid -->
 		</nav>
                 
-                <h1>Welcome <%=request.getAttribute("Name")%></h1>
+      <h1>Welcome <%=request.getAttribute("Name")%></h1><br>
                 
   
   </div>
@@ -153,19 +153,27 @@
 						<form id="addtaskForm" class="form-inline" align="center" method="get" action="Add_Task">
 							<div class="form-group">
 								<input type="text" class="form-control" name="taskname" Placeholder="Task name" />
-								<div id="break-inverse"><br></div>
+								
+								<div id="break">
+									<br>
+								</div>
+                                                        </div><br>
+                                                        <div class="form-group">
+								
 								<input type="text" class="form-control" placeholder="Points" name="taskpoints"/>
 								<div id="break">
 									<br>
 								</div>
-							</div>
+                                                        </div><br>
 							<div class="form-group">
-								<div class="input-group date " id="start">
-									<input type="text" class="form-control" Placeholder="Date due"/>
-									<span class="input-group-addon">
-										<span class="glyphicon glyphicon-calendar"></span>
-									</span>
-								</div>
+                                                                    <div class="col-lg-12 col-xs-12">
+                                                                        <div class="input-group date" id="duedate">
+                                                                            <input type="text" class="form-control" name="duedate" Placeholder="Due date" />
+                                                                            <span class="input-group-addon">
+                                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                                            </span>
+                                                                        </div>  
+                                                                    </div>
 							</div>
 							<br>
 							<div id="break">
@@ -173,7 +181,7 @@
 							</div>
 							<div class="form-group">
 								<div class="col-md-9 col-xs-9">
-									<input type="text" class="form-control" Placeholder="Add friends..." id="addedfriend">
+									<input type="text" class="form-control" Placeholder="Add friends..." id="addedfriend" name="addedfriend">
 								</div>
 								<div class="col-md-3 col-xs-3">
 									<button id="add" type="button" class="btn btn-success" onclick="showFriend()"> Add</button>	
@@ -207,19 +215,19 @@
 	i = 0;
 	
 	 $(function () {
-        $(".date").datepicker();
-    });
+                $("#duedate").datepicker();
+            });
 	
 	function showFriend() {
 		i = i + 1;
 		var name = document.getElementById("addedfriend").value;
-		string = "<div id='here"+i+"' onClick='removeFriend(this)' >"+name+"&nbsp;<span class='glyphicon glyphicon-remove'></span><br></div>"
+		string = "<div id='here"+i+"' onClick='removeFriend(this)' ><input type='text' style='border:none' name='list'  value='"+name+"' />"+"&nbsp;<span class='glyphicon glyphicon-remove' style='color:blue;'></span><br></div>";
+              
 		$("#content").append(string);
 		$("#addedfriend").val('');
 	}
 	
 	function removeFriend(item) {
-		
 		$(item).remove();
 	}
 		
@@ -227,64 +235,12 @@
 		$("#searchForm").show();
 		$("#inviteForm").hide();
 	});
-	$("#Invite").click(function(){
-		$("#inviteForm").show();
-		$("#searchForm").hide();
-		//$("#lfirstname").hide();
-			//$("#llastname").hide();
-			    //$("#lemail").hide();
-					//$("#lemail1").hide();
-	});
-	$("#login").click(function(){
-		var firstname=$("#firstname").val();
-			  var lastname=$("#lastname").val();
-			  var email=$("#email").val();
-			  var flag1=0;
-			   if(firstname=="")
-			  {
-				  $("#lfirstname").fadeIn(500);
-			  }
-			  else
-			  {
-				  $("#lfirstname").fadeOut(500);
-			  }
-			  
-			  if(lastname=="")
-			  {
-				   $("#llastname").fadeIn(500);
-			  }
-			  else
-			  {
-				  $("#llastname").fadeOut(500);
-			  }
-			  if(email=="")
-			  {
-				   $("#lemail").fadeIn(500);
-				   flag1=1;
-			  }
-			  else
-			  {
-				  $("#lemail").fadeOut(500);
-			  }
-			  if((!email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/))&&flag1==0)
-			  {
-				  $("#lemail1").fadeIn(500);
-			  }
-			  if((email.match(/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/))&&flag1==0)
-			  {
-				  $("#lemail1").fadeOut(500);
-			  }
-			  });
-			  
+	
 			  
 			  $(document).ready(function() {
 				$('#inviteForm').bootstrapValidator({
 					// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-					feedbackIcons: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
+					
 					fields: {
 						firstname: {
 							
@@ -321,6 +277,67 @@
 							}
 						},
 					}
+				});
+                                $('#addtaskForm').bootstrapValidator({
+					// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+					
+					fields: {
+						taskname: {
+							
+							validators: {
+								notEmpty: {
+									message: 'Task name is required and cannot be empty'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z]+$/,
+									message: 'Task name can only consist of alphabets'
+								},
+								}
+						},
+						taskpoints: {
+						   
+							validators: {
+								
+								notEmpty: {
+									message: 'Task points is required and cannot be empty'
+								},
+								regexp: {
+									regexp: /^[0-9]+$/,
+									message: 'Task points can only consist of numbers'
+								},
+								}
+						},
+						duedate: {
+						
+							validators: {
+                                                            
+								notEmpty: {
+									message: 'The date is required and cannot be empty'
+								},
+								date: {
+									format: 'MM/DD/YYYY'
+								},
+                                                                }
+						},
+                                                addedfriend: {
+							
+							validators: {
+								notEmpty: {
+									message: 'Name is required and cannot be empty'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z]+$/,
+									message: 'The username can only consist of alphabets'
+								},
+								}
+						},
+					}
+				});
+                                
+                                $('#duedate')
+				.on('dp.change dp.show', function(e) {
+					// Revalidate the date when user change it
+					$('#addtaskForm').bootstrapValidator('revalidateField', 'duedate');
 				});
 			});
 			
