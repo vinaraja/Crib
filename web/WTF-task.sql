@@ -36,6 +36,7 @@ SELECT COUNT(USERID) FROM WTFuser;
 
 DELETE from WTFuser;
 DELETE from WTFtasks;
+DELETE from WTFtaskallocation;
 
 select * from WTFuser;
 select * from WTFtasks;

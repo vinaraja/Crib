@@ -69,10 +69,20 @@ public class Add_Task extends HttpServlet {
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
             Statement stmt=conn.createStatement();
             String query3 = "INSERT INTO IS2560.WTFtasks (TASKNAME,TASKPOINTS,DUEDATE) VALUES ('"+Tname+"','"+Tpoints+"','"+Tduedate+"')";
-            
             stmt.executeUpdate(query3);
+            String query4 = "SELECT * FROM IS2560.WTFtasks WHERE TASKNAME='"+Tname+"'";
+            System.out.println("here");
+            ResultSet rs = stmt.executeQuery(query4);
+            rs.next();
+            int id = rs.getInt("TaskID");
+            for(int i=0;i<assignees.length;i++) {
+                String query5 = "SELECT * FROM WTFuser WHERE FIRSTNAME='"+assignees[i]+"'";
+                rs = stmt.executeQuery(query5);
+                rs.next();
+                String query6 = "INSERT INTO WTFTASKALLOCATION VALUES ("+id+",'"+rs.getString("USERNAME")+"')";
+                stmt.executeUpdate(query6);
+            }
             stmt.close();
-            String query4 = "SELECT * FROM IS2560.WTFtasks";
             out.print("Connection Successful!");
             request.setAttribute("Name",Tname+" added successfully");
             RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
@@ -81,7 +91,7 @@ public class Add_Task extends HttpServlet {
         }
         catch(SQLException ex)
         {
-            out.print("Connection Failed!");
+            out.print(ex+"Connection Failed!");
         }
         }
         
