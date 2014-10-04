@@ -10,7 +10,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,29 +58,26 @@ public class Add_Task extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
+        String Tname=request.getParameter("taskname").replaceAll(" ","");
+        String Tpoints=request.getParameter("taskpoints").replaceAll(" ","");
+        String Tduedate=request.getParameter("duedate").replaceAll(" ","");
+        String[] assignees = request.getParameterValues("list");
         
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()){
-        String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
+        try (PrintWriter out = response.getWriter()) {
+            String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
-            
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            String query1 = "SELECT * FROM WTFuser where username = 'akanade'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query1);
-            //HttpServletResponse.sendRedirect("/your/new/location.jsp")
-            while(rs.next())
-            {
-                    out.println("Welcome "+rs.getString("FirstName"));
-                    request.setAttribute("Name",rs.getString("FirstName")+"! ,task added");
-                    RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
-                    rd.forward(request, response);
-                
-            }
-            st.close();
-            rs.close();
-            conn.close();
+            Statement stmt=conn.createStatement();
+            String query3 = "INSERT INTO IS2560.WTFtasks (TASKNAME,TASKPOINTS,DUEDATE) VALUES ('"+Tname+"','"+Tpoints+"','"+Tduedate+"')";
             
+            stmt.executeUpdate(query3);
+            stmt.close();
+            String query4 = "SELECT * FROM IS2560.WTFtasks";
+            out.print("Connection Successful!");
+            request.setAttribute("Name",Tname+" added successfully");
+            RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
+            rd.forward(request, response);
+            conn.close();
         }
         catch(SQLException ex)
         {
