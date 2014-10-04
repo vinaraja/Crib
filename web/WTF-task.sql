@@ -36,9 +36,11 @@ SELECT COUNT(USERID) FROM WTFuser;
 
 DELETE from WTFuser;
 DELETE from WTFtasks;
+DELETE from WTFtaskallocation;
 
 select * from WTFuser;
 select * from WTFtasks;
+select * from WTFtaskallocation;
 
 ALTER TABLE WTFuser
 DROP COLUMN USERID
@@ -53,6 +55,6 @@ INSERT INTO WTFuser VALUES ('Kanade', 'Aashish', 'akanade', 'akanade@indiana.edu
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate) VALUES ('Clean', '50', '09/10/2014');
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate) VALUES ('Cook', '50', '09/10/2014');
 
-INSERT INTO WTFtaskallocation VALUES ('2','vtalreja');
-INSERT INTO WTFtaskallocation VALUES ('1','akanade');
-INSERT INTO WTFtaskallocation VALUES ('1','vinaraja');
+INSERT INTO WTFtaskallocation VALUES (2,'vtalreja');
+INSERT INTO WTFtaskallocation VALUES (1,'akanade');
+INSERT INTO WTFtaskallocation VALUES (1,'vinaraja');
