@@ -81,8 +81,8 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right" >
-						<li id="group"><a href="#addtaskmodal" class="btn-group-sm" data-toggle="modal"  style="color:white">Add a Task</a></li>
-						<li id="friend"><a href="#addfriendmodal" class="btn-group-sm" data-toggle="modal" style="color:white">Add a Friend</a></li>
+						<li id="group"><a id="showaddtaskmodal" href="#addtaskmodal" class="btn-group-sm" data-toggle="modal"  style="color:white">Add a Task</a></li>
+						<li id="friend"><a id="showaddfriendmodal" href="#addfriendmodal" class="btn-group-sm" data-toggle="modal" style="color:white">Add a Friend</a></li>
 						<li ><a href="task_login.jsp" class="btn-group-sm" style="color:white">Log Out</a></li>
 					</ul> 
 			</div><!-- /.navbar-collapse -->
@@ -231,10 +231,30 @@
 		$(item).remove();
 	}
 		
-	$("#friend").click(function(){
+	$("#inviteForm").hide();
+	
+        
+        $("#showaddtaskmodal").click(function(){
+		
+                document.forms["addtaskForm"].reset();
+	});
+        
+        $("#showaddfriendmodal").click(function(){
 		$("#searchForm").show();
 		$("#inviteForm").hide();
+                document.forms["searchForm"].reset();
+                document.forms["inviteForm"].reset();
 	});
+	
+	
+        $("#Invite").click(function(){
+		$("#searchForm").hide();
+		$("#inviteForm").show();
+                document.forms["searchForm"].reset();
+                document.forms["inviteForm"].reset();
+	});
+        
+        
 	
 	</script>
   </body>
