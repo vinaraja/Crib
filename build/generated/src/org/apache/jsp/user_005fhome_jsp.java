@@ -114,7 +114,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t\t<span class=\"icon-bar\" style=\"background-color:white;\"></span>\n");
       out.write("\t\t\t\t<span class=\"icon-bar\" style=\"background-color:white;\"></span>\n");
       out.write("\t\t\t  </button>\n");
-      out.write("\t\t\t  <a class=\"navbar-brand\" href=\"task_home.html\" style=\"padding-top:0px;\"><img  src=\"img/logo_nav.jpg\" style=\"height:140%;width50%;\"/></a>\n");
+      out.write("\t\t\t  <a class=\"navbar-brand\" href=\"user_home.html\" style=\"padding-top:0px;\"><img  src=\"img/logo_nav.jpg\" style=\"height:140%;width50%;\"/></a>\n");
       out.write("\t\t\t</div>\n");
       out.write("\n");
       out.write("\t\t\t<!-- Collect the nav links, forms, and other content for toggling -->\n");

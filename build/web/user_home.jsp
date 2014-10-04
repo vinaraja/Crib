@@ -75,7 +75,7 @@
 				<span class="icon-bar" style="background-color:white;"></span>
 				<span class="icon-bar" style="background-color:white;"></span>
 			  </button>
-			  <a class="navbar-brand" href="task_home.html" style="padding-top:0px;"><img  src="img/logo_nav.jpg" style="height:140%;width50%;"/></a>
+			  <a class="navbar-brand" href="user_home.html" style="padding-top:0px;"><img  src="img/logo_nav.jpg" style="height:140%;width50%;"/></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
