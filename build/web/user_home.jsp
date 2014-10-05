@@ -75,7 +75,7 @@
 				<span class="icon-bar" style="background-color:white;"></span>
 				<span class="icon-bar" style="background-color:white;"></span>
 			  </button>
-			  <a class="navbar-brand" href="task_home.html" style="padding-top:0px;"><img  src="img/logo_nav.jpg" style="height:140%;width50%;"/></a>
+			  <a class="navbar-brand" href="task_home.html" style="padding-top:0px;"><img  src="img/logo_nav.jpg" style="height:140%;width50%"/></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -102,16 +102,19 @@
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><br><br>
 					<h3 class="modal-title" align="center">Add a Friend</h4></br>
 				
-					<form id="searchForm" class="form-inline" align="center">
+                                        <form id="searchForm" class="form-inline" align="center">
 						<div class="form-group">
 							<div class="col-md-10 col-xs-10">
-								<input type="text" class="form-control input-md" Placeholder="Search..." required>
+								<input type="text" name="searchname" id="searchname" class="form-control input-md" Placeholder="Search..." required>
 							</div>
-							<div class="col-md-1 col-xs-1" style="padding-top:7px;">
-								<a class="glyphicon glyphicon-search" href="#" ></a>  
+                                                     
+							<div class="col-md-1 col-xs-1" style="padding-top:2px;">
+								<button id="SearchButton" type="button">Add </button> 
 							</div>
+                                                    
 						</div><br><br>
-						
+                                                 
+                                                 <div id="searchUpdate"></div>
 						<a align="center" id="Invite" href="#" >Can't find your friend? Invite them!</a>  
 					</form>
 					
@@ -202,6 +205,7 @@
     <script src="http://bsdp-assets.blackcherry.us/1.3.0/bootstrap-datepicker.min.js"></script>
 		<!-- BootstrapValidator JS -->
     <script type="text/javascript" src="dist/js/bootstrapValidator.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
 
 	i = 0;
@@ -209,11 +213,23 @@
 	 $(function () {
         $(".date").datepicker();
     });
-	
+	$("#SearchButton").click(function(){
+           // alert("button");
+           $.get('Search',$("#searchname"),function(ResponseText){  
+              if(ResponseText==="true") 
+              {
+                   $("#searchUpdate").text("User Found");
+              }
+              else
+              {
+                  $("#searchUpdate").text("User not Found");
+              }
+           });
+        });
 	function showFriend() {
 		i = i + 1;
 		var name = document.getElementById("addedfriend").value;
-		string = "<div id='here"+i+"' onClick='removeFriend(this)' >"+name+"&nbsp;<span class='glyphicon glyphicon-remove'></span><br></div>"
+		string = "<div id='here"+i+"' onClick='removeFriend(this)' >"+name+"&nbsp;<span class='glyphicon glyphicon-remove'></span><br></div>";
 		$("#content").append(string);
 		$("#addedfriend").val('');
 	}
@@ -222,7 +238,10 @@
 		
 		$(item).remove();
 	}
-		
+	//$("#SearchButton").click(function(){
+          // $.get('Search',getdata) 
+        //});
+        
 	$("#friend").click(function(){
 		$("#searchForm").show();
 		$("#inviteForm").hide();

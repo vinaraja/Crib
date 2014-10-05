@@ -8,6 +8,11 @@ email varchar(255),
 password varchar(255),
 Primary key (UserID)
 );
+CREATE TABLE Friends
+(
+username1 varchar(255),
+username2 varchar(255)
+);
 CREATE TABLE WTFuser1
 (
 UserID int,
