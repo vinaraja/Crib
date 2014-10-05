@@ -68,10 +68,10 @@
   </head>
   <body>
   <div class="col-md-2"></div>
-  <div class="col-md-8 col-xs-12">
+  <div class="col-md-8 col-xs-12" style='padding: 0'>
+	<div style ="height:100vh;background-color: white;padding: 2em">
 	
-	
-		<nav class="navbar navbar-default" role="navigation" style="border:hidden ;background-color:#7F7F7F; border-radius:10px;">
+		<nav class="navbar navbar-default" role="navigation" style="border:hidden ;background-color:#7F7F7F;width: 100%;margin: -1">
 		  <div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -97,6 +97,7 @@
       <h1>Welcome <%=request.getAttribute("Name")%></h1><br>
       <table>
             <%
+            //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
             request.setAttribute("Name", request.getAttribute("Name"));
           //String user ="vinaraja"; 
           String user = (String)request.getAttribute("username");
@@ -112,6 +113,7 @@
               Statement s2 = conn.createStatement();
               ResultSet rs2 = s2.executeQuery(sql3);
               
+              
               while(rs2.next()){
                   sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
                   ResultSet rs = s.executeQuery(sql);
@@ -119,12 +121,23 @@
                   String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
                   ResultSet rs1 = s1.executeQuery(sql2);
                         rs1.next();
-                        out.println("<TR>");
+                        out.println("<div class='row'>");
+                        out.println("<div class='col-sm-6 col-md-4'>");
+                        out.println("<div class='thumbnail'>");
+                        out.println("<div class='caption'>");
+                        out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
+                        out.println("<p>Points: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
+                 
+                        out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
+                        out.println("</div></div></div></div>");
+                        
+                        
+                        /*out.println("<TR>");
                         out.println("<TD>" + rs.getString("TASKNAME") + "</TD>");
                         out.println("<TD>" + rs.getString("TASKPOINTS") + "</TD>");
                         out.println("<TD>" + rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME") + "</TD>");
                         out.println("<TD>" + rs.getString("DUEDATE") + "</TD>");
-                        out.println("</TR>");
+                        out.println("</TR>");*/
                         rs1.close();
               }
               rs.close();
@@ -142,7 +155,7 @@
     
      %>
       </table>
-                
+        </div> 
   
   </div>
   <div class="col-md-2"></div>

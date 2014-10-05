@@ -111,10 +111,10 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("  </head>\n");
       out.write("  <body>\n");
       out.write("  <div class=\"col-md-2\"></div>\n");
-      out.write("  <div class=\"col-md-8 col-xs-12\">\n");
+      out.write("  <div class=\"col-md-8 col-xs-12\" style='padding: 0'>\n");
+      out.write("\t<div style =\"height:100vh;background-color: white;padding: 2em\">\n");
       out.write("\t\n");
-      out.write("\t\n");
-      out.write("\t\t<nav class=\"navbar navbar-default\" role=\"navigation\" style=\"border:hidden ;background-color:#7F7F7F; border-radius:10px;\">\n");
+      out.write("\t\t<nav class=\"navbar navbar-default\" role=\"navigation\" style=\"border:hidden ;background-color:#7F7F7F;width: 100%;margin: -1\">\n");
       out.write("\t\t  <div class=\"container-fluid\">\n");
       out.write("\t\t\t<!-- Brand and toggle get grouped for better mobile display -->\n");
       out.write("\t\t\t<div class=\"navbar-header\">\n");
@@ -143,6 +143,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("      <table>\n");
       out.write("            ");
 
+            //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
             request.setAttribute("Name", request.getAttribute("Name"));
           String user ="vinaraja"; 
           //String user = (String)request.getAttribute("username");
@@ -158,6 +159,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
               Statement s2 = conn.createStatement();
               ResultSet rs2 = s2.executeQuery(sql3);
               
+              
               while(rs2.next()){
                   sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
                   ResultSet rs = s.executeQuery(sql);
@@ -165,6 +167,19 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
                   String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
                   ResultSet rs1 = s1.executeQuery(sql2);
                         rs1.next();
+                        out.println("<div class='row'>");
+                        out.println("<div class='col-sm-6 col-md-4'>");
+                        out.println("<div class='thumbnail'>");
+                        out.println("<div class='caption'>");
+                        out.println("<h3>Name: "+rs.getString("TASKNAME")+"</h3>");
+                        //out.println("<h4>"+rs.getString("TASKPOINTS")+"</h4>");
+                        
+                        out.println("<p>Points: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
+                        //out.println("<p>"+rs.getString("TASKNAME")+"</p>");
+                        out.println("<p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>");
+                        out.println("</div></div></div></div>");
+                        
+                        
                         out.println("<TR>");
                         out.println("<TD>" + rs.getString("TASKNAME") + "</TD>");
                         out.println("<TD>" + rs.getString("TASKPOINTS") + "</TD>");
@@ -189,7 +204,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
      
       out.write("\n");
       out.write("      </table>\n");
-      out.write("                \n");
+      out.write("        </div> \n");
       out.write("  \n");
       out.write("  </div>\n");
       out.write("  <div class=\"col-md-2\"></div>\n");
