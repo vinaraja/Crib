@@ -10,7 +10,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,33 +58,44 @@ public class Add_Task extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
+        String name=request.getParameter("Name").replaceAll(" ","");
+        String user=request.getParameter("user").replaceAll(" ","");
+        String Tname=request.getParameter("taskname").replaceAll(" ","");
+        String Tpoints=request.getParameter("taskpoints").replaceAll(" ","");
+        String Tduedate=request.getParameter("duedate").replaceAll(" ","");
+        String[] assignees = request.getParameterValues("list");
         
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()){
-        String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
+        try (PrintWriter out = response.getWriter()) {
+            String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
-            
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            String query1 = "SELECT * FROM WTFuser where username = 'akanade'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query1);
-            //HttpServletResponse.sendRedirect("/your/new/location.jsp")
-            while(rs.next())
-            {
-                    out.println("Welcome "+rs.getString("FirstName"));
-                    request.setAttribute("Name",rs.getString("FirstName")+"! ,task added");
-                    RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
-                    rd.forward(request, response);
-                
+            Statement stmt=conn.createStatement();
+            String query3 = "INSERT INTO IS2560.WTFtasks (TASKNAME,TASKPOINTS,DUEDATE,OWNER) VALUES ('"+Tname+"','"+Tpoints+"','"+Tduedate+"','"+user+"')";
+            stmt.executeUpdate(query3);
+            String query4 = "SELECT * FROM IS2560.WTFtasks WHERE TASKNAME='"+Tname+"'";
+            System.out.println("here");
+            ResultSet rs = stmt.executeQuery(query4);
+            rs.next();
+            int id = rs.getInt("TaskID");
+            for(int i=0;i<assignees.length;i++) {
+                String query5 = "SELECT * FROM WTFuser WHERE FIRSTNAME='"+assignees[i]+"'";
+                rs = stmt.executeQuery(query5);
+                rs.next();
+                String query6 = "INSERT INTO WTFTASKALLOCATION VALUES ("+id+",'"+rs.getString("USERNAME")+"')";
+                stmt.executeUpdate(query6);
             }
-            st.close();
-            rs.close();
+            stmt.close();
+            out.print("Connection Successful!");
+            request.setAttribute("Name", name);
+            request.setAttribute("TName",Tname+" added successfully");
+            request.setAttribute("username",user);
+            RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
+            rd.forward(request, response);
             conn.close();
-            
         }
         catch(SQLException ex)
         {
-            out.print("Connection Failed!");
+            out.print(ex+"Connection Failed!");
         }
         }
         
