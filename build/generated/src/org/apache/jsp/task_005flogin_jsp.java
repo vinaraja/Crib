@@ -53,7 +53,7 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("    <title>Welcome to crib!</title>\n");
       out.write("\n");
       out.write("    <!-- Bootstrap -->\n");
-      out.write("    <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\n");
+      out.write("    <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\n");
       out.write("\n");
       out.write("    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n");
       out.write("    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n");

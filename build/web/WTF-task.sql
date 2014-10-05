@@ -25,8 +25,18 @@ FOREIGN KEY(TaskID) REFERENCES WTFtasks(TaskID),
 FOREIGN KEY(username) REFERENCES WTFuser(username)
 );
 
+CREATE TABLE WTFFriends
+(
+mainusername varchar(255),
+friendname varchar(255),
+FOREIGN KEY(mainusername) REFERENCES WTFuser(username),
+CONSTRAINT primary_key_friends PRIMARY KEY (mainusername,friendname)
+);
+drop table WTFFriends;
+
 Alter table WTFtasks
 add column owner varchar(255)
+
 CREATE TABLE WTFuser1
 (
 UserID int,
@@ -35,7 +45,7 @@ Primary key (UserID)
 );
 
 SELECT COUNT(USERID) FROM WTFuser;
-
+SELECT * FROM WTFFriends;
 DELETE from WTFuser;
 DELETE from WTFtasks;
 DELETE from WTFtaskallocation;
@@ -57,6 +67,6 @@ INSERT INTO WTFuser VALUES ('Kanade', 'Aashish', 'akanade', 'akanade@indiana.edu
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Clean', '50', '09/10/2014', 'vtalreja');
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Cook', '50', '09/10/2014', 'vinaraja');
 
-INSERT INTO WTFtaskallocation VALUES (3,'vtalreja');
-INSERT INTO WTFtaskallocation VALUES (3,'akanade');
-INSERT INTO WTFtaskallocation VALUES (4,'vinaraja');
+INSERT INTO WTFtaskallocation VALUES (1,'vtalreja');
+INSERT INTO WTFtaskallocation VALUES (2,'akanade');
+INSERT INTO WTFtaskallocation VALUES (2,'vinaraja');

@@ -76,7 +76,9 @@
 				<span class="icon-bar" style="background-color:white;"></span>
 				<span class="icon-bar" style="background-color:white;"></span>
 			  </button>
+
 			  <div class="navbar-brand" style="padding-top:0px;"><img  src="img/logo_nav.jpg" style="height:140%;width50%;"/></div>
+
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -193,16 +195,21 @@
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><br><br>
 					<h3 class="modal-title" align="center">Add a Friend</h4></br>
 				
+
                                         <form id ="searchForm" class="form-inline" align="center">
+
 						<div class="form-group">
 							<div class="col-md-10 col-xs-10">
-								<input type="text" class="form-control input-md" Placeholder="Search..." required>
+								<input type="text" name="searchname" id="searchname" class="form-control input-md" Placeholder="Search..." required>
 							</div>
-							<div class="col-md-1 col-xs-1" style="padding-top:7px;">
-								<a class="glyphicon glyphicon-search" href="#" ></a>  
+                                                     
+							<div class="col-md-1 col-xs-1" style="padding-top:2px;">
+								<button id="SearchButton" type="button">Add </button> 
 							</div>
+                                                    
 						</div><br><br>
-						
+                                                 
+                                                 <div id="searchUpdate"></div>
 						<a align="center" id="Invite" href="#" >Can't find your friend? Invite them!</a>  
 					</form>
 					
@@ -275,8 +282,8 @@
                                                         </div><br>
 							<div class="form-group">
                                                                     <div class="col-lg-12 col-xs-12">
-                                                                        <div class="input-group date" id="duedate">
-                                                                            <input type="text" class="form-control" name="duedate" Placeholder="Due date" />
+                                                                        <div class="input-group date" >
+                                                                            <input type="text" class="form-control"  id="duedate" name="duedate" Placeholder="Due date" />
                                                                             <span class="input-group-addon">
                                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                                             </span>
@@ -318,6 +325,7 @@
     <script src="http://bsdp-assets.blackcherry.us/1.3.0/bootstrap-datepicker.min.js"></script>
 		<!-- BootstrapValidator JS -->
     <script type="text/javascript" src="dist/js/bootstrapValidator.min.js"></script>
+
     <script>
 
 	i = 0;
@@ -325,20 +333,42 @@
 	 $(function () {
                 $("#duedate").datepicker();
             });
+            
+	$("#SearchButton").click(function(){
+           // alert("button");
+           $.get('Search',$("#searchname"),function(ResponseText){  
+              if(ResponseText==="true") 
+              {
+                   $("#searchUpdate").text("User Found");
+              }
+              else
+              {
+                  $("#searchUpdate").text("User not Found");
+              }
+           });
+        });
+	
+	
+	
+	
+
+              
 	
 	function showFriend() {
 		i = i + 1;
 		var name = document.getElementById("addedfriend").value;
 		string = "<div id='here"+i+"' onClick='removeFriend(this)' ><input type='text' style='border:none' name='list'  value='"+name+"' />"+"&nbsp;<span class='glyphicon glyphicon-remove' style='color:blue;'></span><br></div>";
-              
+
+
 		$("#content").append(string);
 		$("#addedfriend").val('');
 	}
 	
 	function removeFriend(item) {
 		$(item).remove();
-	}
-		
+	}	
+        
+        
 	$("#inviteForm").hide();
 	
         
@@ -348,6 +378,7 @@
 	});
         
         $("#showaddfriendmodal").click(function(){
+
 		$("#searchForm").show();
 		$("#inviteForm").hide();
                 document.forms["searchForm"].reset();
