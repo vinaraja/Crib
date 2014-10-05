@@ -89,7 +89,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\tbody {\n");
       out.write("\t\t  background: -webkit-gradient(#888888,white); /* Chrome,Safari4+ */\n");
       out.write("\t\t  background: -webkit-linear-gradient(#888888,white); /* Chrome10+,Safari5.1+ */\n");
-      out.write("\t\t \n");
+      out.write("\t\t background-repeat: no-repeat;\n");
       out.write("\t\t}\n");
       out.write("\t\t\n");
       out.write("\thtml {height:100%}\n");
@@ -101,12 +101,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("                }\n");
       out.write("\t\n");
       out.write("\t</style>\n");
-      out.write("    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n");
-      out.write("    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n");
-      out.write("    <!--[if lt IE 9]>\n");
-      out.write("      <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n");
-      out.write("      <script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>\n");
-      out.write("    <![endif]-->\n");
+      out.write("    \n");
       out.write("\t\n");
       out.write("  </head>\n");
       out.write("  <body>\n");
@@ -124,7 +119,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t\t<span class=\"icon-bar\" style=\"background-color:white;\"></span>\n");
       out.write("\t\t\t\t<span class=\"icon-bar\" style=\"background-color:white;\"></span>\n");
       out.write("\t\t\t  </button>\n");
-      out.write("\t\t\t  <a class=\"navbar-brand\" href=\"user_home.jsp\" style=\"padding-top:0px;\"><img  src=\"img/logo_nav.jpg\" style=\"height:140%;width50%;\"/></a>\n");
+      out.write("\t\t\t  <div class=\"navbar-brand\" style=\"padding-top:0px;\"><img  src=\"img/logo_nav.jpg\" style=\"height:140%;width50%;\"/></div>\n");
       out.write("\t\t\t</div>\n");
       out.write("\n");
       out.write("\t\t\t<!-- Collect the nav links, forms, and other content for toggling -->\n");
@@ -140,13 +135,25 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("      <h1>Welcome ");
       out.print(request.getAttribute("Name"));
       out.write("</h1><br>\n");
-      out.write("      <table>\n");
-      out.write("            ");
+      out.write("      \n");
+      out.write("      <div class=\"col-md-2\"></div>\n");
+      out.write("\t<div class=\"col-md-8\">\n");
+      out.write("\t<div id=\"carousel-example-generic\" class=\"carousel slide\" data-ride=\"carousel\" style=\"height:50vh\">\n");
+      out.write("\t  <!-- Indicators -->\n");
+      out.write("\t  <ul style=\"display:none\">\n");
+      out.write("\t\t<li data-target=\"#carousel-example-generic\" data-slide-to=\"0\"></li>\n");
+      out.write("\t\t\n");
+      out.write("\t\t\n");
+      out.write("\t  </ul>\n");
+      out.write("\n");
+      out.write("\t  <!-- Wrapper for slides -->\n");
+      out.write("\t  <div class=\"carousel-inner\" >\n");
+      out.write("              ");
 
             //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
             request.setAttribute("Name", request.getAttribute("Name"));
-          String user ="vinaraja"; 
-          //String user = (String)request.getAttribute("username");
+          //String user ="vinaraja"; 
+          String user = (String)request.getAttribute("username");
           String sql,sql3;
           String connectionURL="jdbc:derby://localhost:1527/WTFtask";
             sql3 ="SELECT TASKID FROM WTFtaskallocation where USERNAME = '"+user+"'";
@@ -158,7 +165,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
               Statement s1 = conn.createStatement();
               Statement s2 = conn.createStatement();
               ResultSet rs2 = s2.executeQuery(sql3);
-              
+              int count = 0;
               
               while(rs2.next()){
                   sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
@@ -167,25 +174,31 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
                   String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
                   ResultSet rs1 = s1.executeQuery(sql2);
                         rs1.next();
-                        out.println("<div class='row'>");
-                        out.println("<div class='col-sm-6 col-md-4'>");
+                        if(count==0)
+                        {    
+                        out.println("<div class='item active' style = 'padding-top:13%'>");
+                        }
+                        else
+                        {
+                           out.println("<div class='item' style = 'padding-top:13%'>"); 
+                        }
+                        out.println("<div class='col-md-3'></div>");
+                        out.println("<div class='col-sm-6 col-md-6' align = 'center'>");
                         out.println("<div class='thumbnail'>");
                         out.println("<div class='caption'>");
-                        out.println("<h3>Name: "+rs.getString("TASKNAME")+"</h3>");
-                        //out.println("<h4>"+rs.getString("TASKPOINTS")+"</h4>");
-                        
-                        out.println("<p>Points: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
-                        //out.println("<p>"+rs.getString("TASKNAME")+"</p>");
-                        out.println("<p><a href='#' class='btn btn-primary' role='button'>Button</a> <a href='#' class='btn btn-default' role='button'>Button</a></p>");
+                        out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
+                        out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
+                 
+                        out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
                         out.println("</div></div></div></div>");
+                        count++;
                         
-                        
-                        out.println("<TR>");
+                        /*out.println("<TR>");
                         out.println("<TD>" + rs.getString("TASKNAME") + "</TD>");
                         out.println("<TD>" + rs.getString("TASKPOINTS") + "</TD>");
                         out.println("<TD>" + rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME") + "</TD>");
                         out.println("<TD>" + rs.getString("DUEDATE") + "</TD>");
-                        out.println("</TR>");
+                        out.println("</TR>");*/
                         rs1.close();
               }
               rs.close();
@@ -203,7 +216,30 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
     
      
       out.write("\n");
-      out.write("      </table>\n");
+      out.write("\t  </div>\n");
+      out.write("\n");
+      out.write("\t  <!-- Controls -->\n");
+      out.write("\t  <a class=\"left carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"prev\">\n");
+      out.write("\t\t<span class=\"glyphicon glyphicon-chevron-left\"></span>\n");
+      out.write("\t  </a>\n");
+      out.write("\t  <a class=\"right carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"next\">\n");
+      out.write("\t\t<span class=\"glyphicon glyphicon-chevron-right\"></span>\n");
+      out.write("\t  </a>\n");
+      out.write("\t</div>\n");
+      out.write("\t</div>\n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("      \n");
+      out.write("            \n");
+      out.write("      \n");
       out.write("        </div> \n");
       out.write("  \n");
       out.write("  </div>\n");

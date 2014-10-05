@@ -46,7 +46,7 @@
 		body {
 		  background: -webkit-gradient(#888888,white); /* Chrome,Safari4+ */
 		  background: -webkit-linear-gradient(#888888,white); /* Chrome10+,Safari5.1+ */
-		 
+		 background-repeat: no-repeat;
 		}
 		
 	html {height:100%}
@@ -58,12 +58,7 @@
                 }
 	
 	</style>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    
 	
   </head>
   <body>
@@ -81,7 +76,7 @@
 				<span class="icon-bar" style="background-color:white;"></span>
 				<span class="icon-bar" style="background-color:white;"></span>
 			  </button>
-			  <a class="navbar-brand" href="user_home.jsp" style="padding-top:0px;"><img  src="img/logo_nav.jpg" style="height:140%;width50%;"/></a>
+			  <div class="navbar-brand" style="padding-top:0px;"><img  src="img/logo_nav.jpg" style="height:140%;width50%;"/></div>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -95,8 +90,20 @@
 		  </div><!-- /.container-fluid -->
 		</nav>
       <h1>Welcome <%=request.getAttribute("Name")%></h1><br>
-      <table>
-            <%
+      
+      <div class="col-md-2"></div>
+	<div class="col-md-8">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="height:50vh">
+	  <!-- Indicators -->
+	  <ul style="display:none">
+		<li data-target="#carousel-example-generic" data-slide-to="0"></li>
+		
+		
+	  </ul>
+
+	  <!-- Wrapper for slides -->
+	  <div class="carousel-inner" >
+              <%
             //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
             request.setAttribute("Name", request.getAttribute("Name"));
           //String user ="vinaraja"; 
@@ -112,7 +119,7 @@
               Statement s1 = conn.createStatement();
               Statement s2 = conn.createStatement();
               ResultSet rs2 = s2.executeQuery(sql3);
-              
+              int count = 0;
               
               while(rs2.next()){
                   sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
@@ -121,16 +128,24 @@
                   String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
                   ResultSet rs1 = s1.executeQuery(sql2);
                         rs1.next();
-                        out.println("<div class='row'>");
-                        out.println("<div class='col-sm-6 col-md-4'>");
+                        if(count==0)
+                        {    
+                        out.println("<div class='item active' style = 'padding-top:13%'>");
+                        }
+                        else
+                        {
+                           out.println("<div class='item' style = 'padding-top:13%'>"); 
+                        }
+                        out.println("<div class='col-md-3'></div>");
+                        out.println("<div class='col-sm-6 col-md-6' align = 'center'>");
                         out.println("<div class='thumbnail'>");
                         out.println("<div class='caption'>");
                         out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
-                        out.println("<p>Points: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
+                        out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
                  
                         out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
                         out.println("</div></div></div></div>");
-                        
+                        count++;
                         
                         /*out.println("<TR>");
                         out.println("<TD>" + rs.getString("TASKNAME") + "</TD>");
@@ -154,7 +169,18 @@
        }
     
      %>
-      </table>
+	  </div>
+
+	  <!-- Controls -->
+	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+		<span class="glyphicon glyphicon-chevron-left"></span>
+	  </a>
+	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+		<span class="glyphicon glyphicon-chevron-right"></span>
+	  </a>
+	</div>
+	</div>
+      
         </div> 
   
   </div>
