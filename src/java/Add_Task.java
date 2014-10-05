@@ -58,6 +58,8 @@ public class Add_Task extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
+        String name=request.getParameter("Name").replaceAll(" ","");
+        String user=request.getParameter("user").replaceAll(" ","");
         String Tname=request.getParameter("taskname").replaceAll(" ","");
         String Tpoints=request.getParameter("taskpoints").replaceAll(" ","");
         String Tduedate=request.getParameter("duedate").replaceAll(" ","");
@@ -68,7 +70,7 @@ public class Add_Task extends HttpServlet {
         try{
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
             Statement stmt=conn.createStatement();
-            String query3 = "INSERT INTO IS2560.WTFtasks (TASKNAME,TASKPOINTS,DUEDATE) VALUES ('"+Tname+"','"+Tpoints+"','"+Tduedate+"')";
+            String query3 = "INSERT INTO IS2560.WTFtasks (TASKNAME,TASKPOINTS,DUEDATE,OWNER) VALUES ('"+Tname+"','"+Tpoints+"','"+Tduedate+"','"+user+"')";
             stmt.executeUpdate(query3);
             String query4 = "SELECT * FROM IS2560.WTFtasks WHERE TASKNAME='"+Tname+"'";
             System.out.println("here");
@@ -84,7 +86,9 @@ public class Add_Task extends HttpServlet {
             }
             stmt.close();
             out.print("Connection Successful!");
-            request.setAttribute("Name",Tname+" added successfully");
+            request.setAttribute("Name", name);
+            request.setAttribute("TName",Tname+" added successfully");
+            request.setAttribute("username",user);
             RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
             rd.forward(request, response);
             conn.close();

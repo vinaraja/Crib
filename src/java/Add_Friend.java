@@ -29,11 +29,15 @@ public class Add_Friend extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        String sender_name = request.getParameter("user").replaceAll(" ","");
+        String receiver_fname = request.getParameter("firstname").replaceAll(" ","");
+        String receiver_lname = request.getParameter("lastname").replaceAll(" ","");
+        String to = request.getParameter("email").replaceAll(" ","");
+        out.print(sender_name);
         String user = "crib.notifications@gmail.com";
         String pass = "firewaterthunder";
-        String to = "aashishkanade@gmail.com";
-        String sub = "Checking servlet";
-        String body = "And the Servlet Works";
+        String sub = "You Friend "+user+" wants you to join CRIB";
+        String body = "Hi "+receiver_fname+" "+receiver_lname+", Your friend"+sender_name+"wants you to join CRIB. CRIB is a portal where you and your friends can manage household chores and make sure that your house is clean at all times. Click on http://localhost:8080/WTF-task/task_login.jsp to join CRIB.";
         Properties props = new Properties();
         props.put("mail.smtp.host","smtp.gmail.com");
         props.put("mail.smtp.port","587");

@@ -73,6 +73,8 @@ public class Login extends HttpServlet {
                 {
                     out.println("Welcome "+rs.getString("FirstName"));
                     request.setAttribute("Name",rs.getString("FirstName"));
+                    request.setAttribute("username",rs.getString("username"));
+                    //RequestDispatcher rd=request.getRequestDispatcher("Display_User");
                     RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
                     rd.forward(request, response);
                 }

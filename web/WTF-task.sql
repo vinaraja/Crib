@@ -25,6 +25,8 @@ FOREIGN KEY(TaskID) REFERENCES WTFtasks(TaskID),
 FOREIGN KEY(username) REFERENCES WTFuser(username)
 );
 
+Alter table WTFtasks
+add column owner varchar(255)
 CREATE TABLE WTFuser1
 (
 UserID int,
@@ -52,9 +54,9 @@ INSERT INTO WTFuser VALUES ('Talreja', 'Vishesh', 'vtalreja', 'vtalreja@indiana.
 INSERT INTO WTFuser VALUES ('Rajagopalan', 'Vinay', 'vinaraja', 'vinaraja@indiana.edu', 'firewaterthunder');
 INSERT INTO WTFuser VALUES ('Kanade', 'Aashish', 'akanade', 'akanade@indiana.edu', 'firewaterthunder');
 
-INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate) VALUES ('Clean', '50', '09/10/2014');
-INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate) VALUES ('Cook', '50', '09/10/2014');
+INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Clean', '50', '09/10/2014', 'vtalreja');
+INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Cook', '50', '09/10/2014', 'vinaraja');
 
-INSERT INTO WTFtaskallocation VALUES (2,'vtalreja');
-INSERT INTO WTFtaskallocation VALUES (1,'akanade');
-INSERT INTO WTFtaskallocation VALUES (1,'vinaraja');
+INSERT INTO WTFtaskallocation VALUES (3,'vtalreja');
+INSERT INTO WTFtaskallocation VALUES (3,'akanade');
+INSERT INTO WTFtaskallocation VALUES (4,'vinaraja');
