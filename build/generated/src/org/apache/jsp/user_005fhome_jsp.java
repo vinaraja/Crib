@@ -154,8 +154,8 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
 
             //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
             request.setAttribute("Name", request.getAttribute("Name"));
-          String user ="vinaraja"; 
-          //String user = (String)request.getAttribute("username");
+          //String user ="vinaraja"; 
+          String user = (String)request.getAttribute("username");
           String sql,sql3;
           String connectionURL="jdbc:derby://localhost:1527/WTFtask";
             sql3 ="SELECT TASKID FROM WTFtaskallocation where USERNAME = '"+user+"'";

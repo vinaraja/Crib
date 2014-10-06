@@ -36,8 +36,8 @@ public class Add_Friend extends HttpServlet {
         out.print(sender_name);
         String user = "crib.notifications@gmail.com";
         String pass = "firewaterthunder";
-        String sub = "You Friend "+user+" wants you to join CRIB";
-        String body = "Hi "+receiver_fname+" "+receiver_lname+", Your friend"+sender_name+"wants you to join CRIB. CRIB is a portal where you and your friends can manage household chores and make sure that your house is clean at all times. Click on http://localhost:8080/WTF-task/task_login.jsp to join CRIB.";
+        String sub = "You Friend "+sender_name+" wants you to join CRIB";
+        String body = "Hi "+receiver_fname+" "+receiver_lname+", Your friend "+sender_name+" wants you to join CRIB. CRIB is a portal where you and your friends can manage household chores and make sure that your house is clean at all times. Click on http://localhost:8080/WTF-task/task_login.jsp to join CRIB.";
         Properties props = new Properties();
         props.put("mail.smtp.host","smtp.gmail.com");
         props.put("mail.smtp.port","587");
