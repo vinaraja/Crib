@@ -98,7 +98,14 @@
             {
                 out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
                 out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
-                out.println("Your friend <strong>"+request.getAttribute("rname")+"</strong> has been invited");
+                out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("rname")+"</strong>&nbsp;has been invited.");
+                out.println("</div>");
+            }
+         if ((String)request.getAttribute("added")=="yes")
+            {
+                out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
+                out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+                out.println("<strong>&nbsp;Success! "+request.getAttribute("TName")+"</strong>&nbsp;has been added.");
                 out.println("</div>");
             }
       %>
@@ -425,7 +432,7 @@
                                     message: 'Task name is required'
                                 },
                                 regexp: {
-                                    regexp: /^[a-zA-Z]+$/,
+                                    regexp: /^[a-zA-Z ]+$/,
                                     message: 'Alphabets only'
                                 },
                                 }
@@ -439,16 +446,6 @@
                                     regexp: /^[0-9]+$/,
                                     message: 'Numbers only'
 				},
-                            }
-                        },
-			duedate: {
-                            validators: {
-				notEmpty: {
-                                    message: 'Due date is required'
-                            	},
-                                date: {
-                                    format: 'MM/DD/YYYY'
-                                }
                             }
                         },
                     }

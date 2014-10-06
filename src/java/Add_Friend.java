@@ -30,10 +30,15 @@ public class Add_Friend extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         String username = request.getParameter("username").replaceAll(" ","");
+        username = username.toLowerCase();
         String sender_name = request.getParameter("user").replaceAll(" ","");
+        sender_name = sender_name.toLowerCase();
         String receiver_fname = request.getParameter("firstname").replaceAll(" ","");
+        receiver_fname = receiver_fname.toLowerCase();
         String receiver_lname = request.getParameter("lastname").replaceAll(" ","");
+        receiver_lname = receiver_lname.toLowerCase();
         String to = request.getParameter("email").replaceAll(" ","");
+        to = to.toLowerCase();
         out.print(sender_name);
         String user = "crib.notifications@gmail.com";
         String pass = "firewaterthunder";

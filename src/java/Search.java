@@ -59,6 +59,7 @@ public class Search extends HttpServlet {
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
                response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
         String name=request.getParameter("searchname");
+        name = name.toLowerCase();
         System.out.println(name);
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */

@@ -41,9 +41,13 @@ public class Registration extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String Fname=request.getParameter("fname").replaceAll(" ","");
+        Fname = Fname.toLowerCase();
         String Lname=request.getParameter("lname").replaceAll(" ","");
+        Lname = Lname.toLowerCase();
         String Email=request.getParameter("email").replaceAll(" ","");
+        Email = Email.toLowerCase();
         String user=request.getParameter("username").replaceAll(" ","");
+        user = user.toLowerCase();
         String pass=request.getParameter("password").replaceAll(" ","");
         
         try (PrintWriter out = response.getWriter()) {

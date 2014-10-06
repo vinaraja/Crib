@@ -60,12 +60,16 @@ public class Add_Task extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         System.out.println("Inside");
         String name=request.getParameter("Name").replaceAll(" ","");
+        name = name.toLowerCase();
         String user=request.getParameter("user").replaceAll(" ","");
-        String Tname=request.getParameter("taskname").replaceAll(" ","");
+        user = user.toLowerCase();
+        String Tname=request.getParameter("taskname");
         String Tpoints=request.getParameter("taskpoints").replaceAll(" ","");
         String Tduedate=request.getParameter("duedate").replaceAll(" ","");
         String[] assignees = request.getParameterValues("list");
-        
+        for(int i=0; i<assignees.length;i++) {
+            assignees[i] = assignees[i].toLowerCase();
+        }
         try (PrintWriter out = response.getWriter()) {
             String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
@@ -88,8 +92,10 @@ public class Add_Task extends HttpServlet {
             stmt.close();
             out.print("Connection Successful!");
             request.setAttribute("Name", name);
-            request.setAttribute("TName",Tname+" added successfully");
+            request.setAttribute("TName",Tname);
+            System.out.println(Tname);
             request.setAttribute("username",user);
+            request.setAttribute("added", "yes");
             RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
             rd.forward(request, response);
             conn.close();

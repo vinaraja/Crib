@@ -62,6 +62,7 @@ DROP TABLE WTFtaskallocation;
 DROP TABLE WTFFriends;
 
 INSERT INTO WTFuser VALUES ('Talreja', 'Vishesh', 'vtalreja', 'vtalreja@indiana.edu', 'firewaterthunder');
+INSERT INTO WTFuser VALUES ('talreja', 'vishesh', 'vtalrejaa', 'vtalreja@indiana.edu', 'firewaterthunder');
 INSERT INTO WTFuser VALUES ('Rajagopalan', 'Vinay', 'vinaraja', 'vinaraja@indiana.edu', 'firewaterthunder');
 INSERT INTO WTFuser VALUES ('Kanade', 'Aashish', 'akanade', 'akanade@indiana.edu', 'firewaterthunder');
 

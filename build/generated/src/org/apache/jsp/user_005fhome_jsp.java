@@ -137,18 +137,23 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("      <h1>Welcome ");
       out.print(request.getAttribute("Name"));
       out.write("</h1><br>\n");
-      out.write("      <div class=\"alert alert-warning alert-dismissible\" role=\"alert\">\n");
-      out.write("        <button type=\"button\" class=\"close\" data-dismiss=\"alert\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button>\n");
-      out.write("        <strong>Warning!</strong> Better check yourself, you're not looking too good.\n");
-      out.write("      </div>\n");
+      out.write("      \n");
       out.write("\n");
       out.write("      ");
  if ((String)request.getAttribute("send")=="yes")
             {
-                out.println("<h2><font color = 'green'>Your friend "+request.getAttribute("rname")+" has been invited<font></h2>");
+                out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
+                out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+                out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("rname")+"</strong>&nbsp;has been invited.");
+                out.println("</div>");
             }
-      
-      
+         if ((String)request.getAttribute("added")=="yes")
+            {
+                out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
+                out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+                out.println("<strong>&nbsp;Success! "+request.getAttribute("TName")+"</strong>&nbsp;has been added.");
+                out.println("</div>");
+            }
       
       out.write("\n");
       out.write("      <div class=\"col-md-2\"></div>\n");
@@ -484,7 +489,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("                                    message: 'Task name is required'\n");
       out.write("                                },\n");
       out.write("                                regexp: {\n");
-      out.write("                                    regexp: /^[a-zA-Z]+$/,\n");
+      out.write("                                    regexp: /^[a-zA-Z ]+$/,\n");
       out.write("                                    message: 'Alphabets only'\n");
       out.write("                                },\n");
       out.write("                                }\n");
@@ -498,16 +503,6 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("                                    regexp: /^[0-9]+$/,\n");
       out.write("                                    message: 'Numbers only'\n");
       out.write("\t\t\t\t},\n");
-      out.write("                            }\n");
-      out.write("                        },\n");
-      out.write("\t\t\tduedate: {\n");
-      out.write("                            validators: {\n");
-      out.write("\t\t\t\tnotEmpty: {\n");
-      out.write("                                    message: 'Due date is required'\n");
-      out.write("                            \t},\n");
-      out.write("                                date: {\n");
-      out.write("                                    format: 'MM/DD/YYYY'\n");
-      out.write("                                }\n");
       out.write("                            }\n");
       out.write("                        },\n");
       out.write("                    }\n");

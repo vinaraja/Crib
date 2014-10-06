@@ -66,6 +66,7 @@ public class Validate_Assignee extends HttpServlet {
         response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
         
         String user = request.getParameter("addedfriend").replaceAll(" ","");
+        user = user.toLowerCase();
         try (PrintWriter out = response.getWriter()){
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{

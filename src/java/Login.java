@@ -55,6 +55,7 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         String user=request.getParameter("username").replaceAll(" ","");
+        user = user.toLowerCase();
         String pass=request.getParameter("password").replaceAll(" ","");
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()){
