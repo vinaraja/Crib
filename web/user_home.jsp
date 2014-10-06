@@ -226,7 +226,7 @@
 						<div id="break">
 							<br>
 						</div>
-						<div class=>
+						<div class="form-group">
 							<input type="text" class="form-control" name="email" Placeholder="Email address"/>
 						</div>
                                                 <div class="form-group">
@@ -236,7 +236,7 @@
 							<br>
 						</div>
 						<div class="form-group">
-							<button id="login" href="#" class="btn btn-primary" align="center">Invite</button>
+							<button type="submit" id="login" href="#" class="btn btn-primary" align="center">Invite</button>
 						</div><br>
 					</form>	
 				</div>
@@ -301,15 +301,16 @@
 									<button id="add" type="button" class="btn btn-success" onclick="showFriend()"> Add</button>	
 								</div>
 							</div>
+                                                        <div id="somediv"></div>
 							<div id="break">
 								<br>
 							</div>
 							<div id="break-inverse">
 								<br><br>
-							</div>
-							<div id="content"></div><br>
+                                                        </div>
+                                                        <div id="content" style="color:red;"></div><br>
 							<div class="form-group">
-                                                            <button class="btn btn-primary">Add task</button><br><br>
+                                                            <button type="submit" class="btn btn-primary">Add task</button><br><br>
 							</div><br>
 						</form>
 				</div>
@@ -347,26 +348,29 @@
            });
         });
 	
-	
-	
-	
-
-              
-	
-	function showFriend() {
-		i = i + 1;
-		var name = document.getElementById("addedfriend").value;
-		string = "<div id='here"+i+"' onClick='removeFriend(this)' ><input type='text' style='border:none' name='list'  value='"+name+"' />"+"&nbsp;<span class='glyphicon glyphicon-remove' style='color:blue;'></span><br></div>";
-
-
-		$("#content").append(string);
-		$("#addedfriend").val('');
+        
+        function showFriend() {
+               
+		$.get('Validate_Assignee', $("#addedfriend"), function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                       if (responseText === "true") {
+                           $("#somediv").text("");
+                           i = i + 1;
+                           var name = document.getElementById("addedfriend").value;
+                           string = "<div id='here"+i+"' onClick='removeFriend(this)' ><input type='text' style='border:none' name='list'  value='"+name+"' />"+"&nbsp;<span class='glyphicon glyphicon-remove' style='color:#7F7F7F;'></span><br></div>";
+                           $("#content").append(string);
+                           $("#addedfriend").val('');
+                        }
+                        else {
+                           $("#somediv").text("No such user");
+                           $("#addedfriend").val('');
+                        }
+                    });
+        
 	}
-	
+        
 	function removeFriend(item) {
 		$(item).remove();
 	}	
-        
         
 	$("#inviteForm").hide();
 	
@@ -374,6 +378,8 @@
         $("#showaddtaskmodal").click(function(){
 		
                 document.forms["addtaskForm"].reset();
+                $("#somediv").text("");
+                $("#content").text("");
 	});
         
         $("#showaddfriendmodal").click(function(){
@@ -392,7 +398,95 @@
                 document.forms["inviteForm"].reset();
 	});
         
-        
+        $(document).ready(function() {
+            $('#addtaskForm').bootstrapValidator({
+                    container:'tooltip',
+                    feedbackIcons: {		
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                    },
+                    fields: {
+			taskname: {
+                        	validators: {
+				notEmpty: {
+                                    message: 'Task name is required'
+                                },
+                                regexp: {
+                                    regexp: /^[a-zA-Z]+$/,
+                                    message: 'Alphabets only'
+                                },
+                                }
+                        },
+                        taskpoints: {
+                            validators: {
+				notEmpty: {
+                                    message: 'Task points are required'
+				},
+				regexp: {
+                                    regexp: /^[0-9]+$/,
+                                    message: 'Numbers only'
+				},
+                            }
+                        },
+			duedate: {
+                            validators: {
+				notEmpty: {
+                                    message: 'Due date is required'
+                            	},
+                                date: {
+                                    format: 'MM/DD/YYYY'
+                                }
+                            }
+                        },
+                    }
+            });
+                                
+            $('#inviteForm').bootstrapValidator({
+		// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+                container:'tooltip',
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+                    	validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			firstname: {
+				validators: {
+                            		notEmpty: {
+                                            message: 'First name is required'
+                                        },
+                                        regexp: {
+                                            regexp: /^[a-zA-Z]+$/,
+                                            message: 'Alphabets only'
+                                        },
+				}
+			},
+			lastname: {
+				validators: {
+					notEmpty: {
+						message: 'Last name is required'
+					},
+					regexp: {
+						regexp: /^[a-zA-Z]+$/,
+						message: 'Alphabets only'
+					},
+				}
+			},
+                        email: {
+				validators: {
+                            		notEmpty: {
+                                    		message: 'Email is required'
+					},
+					regexp: {
+						regexp: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                message: 'Email is invalid'
+                                        },
+                                }
+                        },
+		}
+            });
+        });
 	
 	</script>
   </body>
