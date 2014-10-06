@@ -67,6 +67,10 @@ INSERT INTO WTFuser VALUES ('Kanade', 'Aashish', 'akanade', 'akanade@indiana.edu
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Clean', '50', '09/10/2014', 'vtalreja');
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Cook', '50', '09/10/2014', 'vinaraja');
 
-INSERT INTO WTFtaskallocation VALUES (1,'vtalreja');
-INSERT INTO WTFtaskallocation VALUES (2,'akanade');
-INSERT INTO WTFtaskallocation VALUES (2,'vinaraja');
+INSERT INTO WTFtaskallocation VALUES (3,'vtalreja');
+INSERT INTO WTFtaskallocation VALUES (4,'akanade');
+INSERT INTO WTFtaskallocation VALUES (5,'vinaraja');
+INSERT INTO WTFtaskallocation VALUES (4,'vtalreja');
+INSERT INTO WTFtaskallocation VALUES (6,'akanade');
+INSERT INTO WTFtaskallocation VALUES (8,'vinaraja');
+INSERT INTO WTFtaskallocation VALUES (7,'akanade');

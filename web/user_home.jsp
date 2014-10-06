@@ -95,7 +95,7 @@
       
       <div class="col-md-2"></div>
 	<div class="col-md-8">
-	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="height:50vh">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="height:35vh">
 	  <!-- Indicators -->
 	  <ul style="display:none">
 		<li data-target="#carousel-example-generic" data-slide-to="0"></li>
@@ -132,19 +132,18 @@
                         rs1.next();
                         if(count==0)
                         {    
-                        out.println("<div class='item active' style = 'padding-top:13%'>");
+                        out.println("<div class='item active' style = 'padding-top:3%'>");
                         }
                         else
                         {
-                           out.println("<div class='item' style = 'padding-top:13%'>"); 
+                           out.println("<div class='item' style = 'padding-top:3%'>"); 
                         }
                         out.println("<div class='col-md-3'></div>");
                         out.println("<div class='col-sm-6 col-md-6' align = 'center'>");
-                        out.println("<div class='thumbnail'>");
+                        out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;height:30vh'>");
                         out.println("<div class='caption'>");
                         out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
                         out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
-                 
                         out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
                         out.println("</div></div></div></div>");
                         count++;
