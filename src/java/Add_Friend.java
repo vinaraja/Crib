@@ -29,6 +29,7 @@ public class Add_Friend extends HttpServlet {
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        String username = request.getParameter("username").replaceAll(" ","");
         String sender_name = request.getParameter("user").replaceAll(" ","");
         String receiver_fname = request.getParameter("firstname").replaceAll(" ","");
         String receiver_lname = request.getParameter("lastname").replaceAll(" ","");
@@ -55,6 +56,12 @@ protected PasswordAuthentication getPasswordAuthentication(){return new Password
             message.setText(body);
             
             Transport.send(message);
+            request.setAttribute("Name",sender_name);
+            request.setAttribute("username",username);
+            request.setAttribute("rname",receiver_fname);
+            request.setAttribute("send","yes");
+            RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
+            rd.forward(request, response);
         }
         catch(Exception e){
             e.printStackTrace();

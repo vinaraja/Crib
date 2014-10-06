@@ -15,6 +15,7 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/bootstrapValidator.min.css"/>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -72,7 +73,7 @@
 		
 					<div class="win" id="log">
 						<img src="img/logo.jpg" style="height:20%;"/><br><br>
-                                                <form role="form" class="form-inline" method="get" action="Login">
+                                                <form role="form" id="login_form" class="form-inline" method="get" action="Login">
 						  <div class="form-group">
 							<input type="text" name="username" class="form-control" id="exampleInputEmail1" placeholder="Username">
 						  </div>
@@ -85,7 +86,7 @@
 						  <div id="break">
 							<br>
 						  </div>
-						  <button class="btn btn-primary">Login</button><br><br>
+						  <button type="submit" class="btn btn-primary">Login</button><br><br>
 						 <a  class="formNotice" href="#" role="button">
 							Need an account? Sign up!
 						 </a>
@@ -97,7 +98,7 @@
 		
 					<div class="win" id="reg">
 						<img src="img/logo.jpg" style="height:20%;"/><br><br>
-						<form role="form" class="form-inline" method="get" action="Registration">
+						<form role="form" class="form-inline" method="get" action="Registration" id="reg_form">
 						  <div class="form-group">
 							<input type="text" name="fname" class="form-control" id="exampleInputEmail1" placeholder="First Name">
 						  </div>
@@ -141,6 +142,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="dist/js/bootstrapValidator.min.js"></script>
 	
 	<script>
 
@@ -150,7 +152,131 @@
 						$("#log").toggle();
 						$("#reg").toggle();
 					});						
+				
+                                
+                                    $('login_form').bootstrapValidator({
+					// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+					container:'tooltip',
+                                        feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						username: {
+							
+							validators: {
+								notEmpty: {
+									message: 'Username required'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z]+$/,
+									message: 'Alphabets only'
+								},
+								}
+						},
+						password: {
+						   
+							validators: {
+								
+								notEmpty: {
+									message: 'Password required'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z0-9]+$/,
+									message: 'Alphabets and numbers only'
+								},
+								}
+						}
+						
+					}
+                                    });
+                                    $('reg_form').bootstrapValidator({
+					// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
+					container:'tooltip',
+                                        feedbackIcons: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+                                                username: {
+							
+							validators: {
+								notEmpty: {
+									message: 'Username required'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z]+$/,
+									message: 'Alphabets only'
+								},
+								}
+						},
+                                                firstname: {
+							
+							validators: {
+								notEmpty: {
+									message: 'First name required'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z]+$/,
+									message: 'Alphabets only'
+								},
+								}
+						},
+						lastname: {
+							
+							validators: {
+								notEmpty: {
+									message: 'Last name required'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z]+$/,
+									message: 'Alphabets only'
+								},
+								}
+						},
+						password: {
+						   
+							validators: {
+								
+								notEmpty: {
+									message: 'Password required'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z0-9]+$/,
+									message: 'Alphabets and numbers only'
+								},
+								}
+						},
+                                                cpassword: {
+						   
+							validators: {
+								
+								notEmpty: {
+									message: 'Retype password'
+								},
+								regexp: {
+									regexp: /^[a-zA-Z0-9]+$/,
+									message: 'Alphabets and numbers only'
+								},
+								}
+						},
+                                                email: {
+                                                        validators: {
+                                                                notEmpty: {
+                                                                        message: 'Email is required'
+                                                                },
+                                                                regexp: {
+                                                                        regexp: /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                                        message: 'Email is invalid'
+                                                                },
+                                                        }
+                                                },
+						
+					}
 				});
+                                });
 	</script>
 
   </body>
