@@ -39,8 +39,17 @@
 		#break-inverse {display:none;}
 		
 		@media (max-width: 480px) { 
-			#break-inverse {display:initial;}
+                        #break-inverse {display:initial;}
 			#break { display:none;}
+                        
+                        .carousel-inner .active.left { left: -100%; }
+                        .carousel-inner .next        { left:  100%; }
+                        .carousel-inner .prev        { left:  -10   0%; }
+                        .carousel-control.left,.carousel-control.right {background-image:none;}
+                        .col-lg-2 {width: 100%;}
+                        
+                        #myCarousel {height:35vh;}
+                        .item {height:25vh;}
 		}
 			
 		body {
@@ -48,14 +57,20 @@
 		  background: -webkit-linear-gradient(#888888,white); /* Chrome10+,Safari5.1+ */
 		 background-repeat: no-repeat;
 		}
-		
-	html {height:100%}
-	
-	
-        
-        ::-webkit-scrollbar { 
-                    display: none; 
+                
+		#myCarousel {height:30vh;}
+                .item {height:25vh;}
+                html {height:100%}
+
+                ::-webkit-scrollbar { 
+                            display: none; 
                 }
+                
+                .carousel-inner .active.left { left: -33%; }
+		.carousel-inner .next        { left:  33%; }
+		.carousel-inner .prev        { left:  -33%; }
+		.carousel-control.left,.carousel-control.right {background-image:none;}
+		.col-lg-2 {width: 33%;}
 	
 	</style>
     
@@ -109,18 +124,11 @@
                 out.println("</div>");
             }
       %>
-      <div class="col-md-2"></div>
-	<div class="col-md-8">
-	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="height:35vh">
-	  <!-- Indicators -->
-	  <ul style="display:none">
-		<li data-target="#carousel-example-generic" data-slide-to="0"></li>
-		
-		
-	  </ul>
-
-	  <!-- Wrapper for slides -->
-	  <div class="carousel-inner" >
+	<div class="col-md-12">
+            <div class="col-md-4 col-md-offset-4 text-center"><h4><a  href="#myCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>&nbsp;Task viewer&nbsp;<a  href="#myCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a></h4></div>
+            <div class="col-md-12 col-xs-12">
+                <div class="carousel slide" id="myCarousel">
+                    <div class="carousel-inner">
               <%
             //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
             request.setAttribute("Name", request.getAttribute("Name"));
@@ -148,15 +156,14 @@
                         rs1.next();
                         if(count==0)
                         {    
-                        out.println("<div class='item active' style = 'padding-top:3%'>");
+                        out.println("<div class='item active'>");
                         }
                         else
                         {
-                           out.println("<div class='item' style = 'padding-top:3%'>"); 
+                           out.println("<div class='item'>"); 
                         }
-                        out.println("<div class='col-md-3'></div>");
-                        out.println("<div class='col-sm-6 col-md-6' align = 'center'>");
-                        out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;height:30vh'>");
+                        out.println("<div class='col-lg-2 col-xs-12' >");
+                        out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;' align='center'>");
                         out.println("<div class='caption'>");
                         out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
                         out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
@@ -188,19 +195,11 @@
      %>
 	  </div>
 
-	  <!-- Controls -->
-	  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-		<span class="glyphicon glyphicon-chevron-left"></span>
-	  </a>
-	  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-		<span class="glyphicon glyphicon-chevron-right"></span>
-	  </a>
 	</div>
 	</div>
       
-        </div> 
-  
-  </div>
+    </div> 
+
   <div class="col-md-2"></div>
 
 	<div id="addfriendmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -416,6 +415,27 @@
                 document.forms["searchForm"].reset();
                 document.forms["inviteForm"].reset();
 	});
+        
+        $('#myCarousel').carousel({
+		  interval: 4000
+		})
+
+		$('.carousel .item').each(function(){
+		  var next = $(this).next();
+		  if (!next.length) {
+			next = $(this).siblings(':first');
+		  }
+		  next.children(':first-child').clone().appendTo($(this));
+		  
+		  for (var i=0;i<1;i++) {
+			next=next.next();
+			if (!next.length) {
+				next = $(this).siblings(':first');
+			}
+			
+			next.children(':first-child').clone().appendTo($(this));
+		  }
+		});
         
         $(document).ready(function() {
             $('#addtaskForm').bootstrapValidator({

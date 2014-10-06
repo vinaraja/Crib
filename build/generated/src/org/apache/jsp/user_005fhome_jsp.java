@@ -82,8 +82,17 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t#break-inverse {display:none;}\n");
       out.write("\t\t\n");
       out.write("\t\t@media (max-width: 480px) { \n");
-      out.write("\t\t\t#break-inverse {display:initial;}\n");
+      out.write("                        #break-inverse {display:initial;}\n");
       out.write("\t\t\t#break { display:none;}\n");
+      out.write("                        \n");
+      out.write("                        .carousel-inner .active.left { left: -100%; }\n");
+      out.write("                        .carousel-inner .next        { left:  100%; }\n");
+      out.write("                        .carousel-inner .prev        { left:  -10   0%; }\n");
+      out.write("                        .carousel-control.left,.carousel-control.right {background-image:none;}\n");
+      out.write("                        .col-lg-2 {width: 100%;}\n");
+      out.write("                        \n");
+      out.write("                        #myCarousel {height:35vh;}\n");
+      out.write("                        .item {height:25vh;}\n");
       out.write("\t\t}\n");
       out.write("\t\t\t\n");
       out.write("\t\tbody {\n");
@@ -91,14 +100,20 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t  background: -webkit-linear-gradient(#888888,white); /* Chrome10+,Safari5.1+ */\n");
       out.write("\t\t background-repeat: no-repeat;\n");
       out.write("\t\t}\n");
-      out.write("\t\t\n");
-      out.write("\thtml {height:100%}\n");
-      out.write("\t\n");
-      out.write("\t\n");
-      out.write("        \n");
-      out.write("        ::-webkit-scrollbar { \n");
-      out.write("                    display: none; \n");
+      out.write("                \n");
+      out.write("\t\t#myCarousel {height:30vh;}\n");
+      out.write("                .item {height:25vh;}\n");
+      out.write("                html {height:100%}\n");
+      out.write("\n");
+      out.write("                ::-webkit-scrollbar { \n");
+      out.write("                            display: none; \n");
       out.write("                }\n");
+      out.write("                \n");
+      out.write("                .carousel-inner .active.left { left: -33%; }\n");
+      out.write("\t\t.carousel-inner .next        { left:  33%; }\n");
+      out.write("\t\t.carousel-inner .prev        { left:  -33%; }\n");
+      out.write("\t\t.carousel-control.left,.carousel-control.right {background-image:none;}\n");
+      out.write("\t\t.col-lg-2 {width: 33%;}\n");
       out.write("\t\n");
       out.write("\t</style>\n");
       out.write("    \n");
@@ -156,18 +171,11 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
             }
       
       out.write("\n");
-      out.write("      <div class=\"col-md-2\"></div>\n");
-      out.write("\t<div class=\"col-md-8\">\n");
-      out.write("\t<div id=\"carousel-example-generic\" class=\"carousel slide\" data-ride=\"carousel\" style=\"height:35vh\">\n");
-      out.write("\t  <!-- Indicators -->\n");
-      out.write("\t  <ul style=\"display:none\">\n");
-      out.write("\t\t<li data-target=\"#carousel-example-generic\" data-slide-to=\"0\"></li>\n");
-      out.write("\t\t\n");
-      out.write("\t\t\n");
-      out.write("\t  </ul>\n");
-      out.write("\n");
-      out.write("\t  <!-- Wrapper for slides -->\n");
-      out.write("\t  <div class=\"carousel-inner\" >\n");
+      out.write("\t<div class=\"col-md-12\">\n");
+      out.write("            <div class=\"col-md-4 col-md-offset-4 text-center\"><h4><a  href=\"#myCarousel\" data-slide=\"prev\"><i class=\"glyphicon glyphicon-chevron-left\"></i></a>&nbsp;Task viewer&nbsp;<a  href=\"#myCarousel\" data-slide=\"next\"><i class=\"glyphicon glyphicon-chevron-right\"></i></a></h4></div>\n");
+      out.write("            <div class=\"col-md-12 col-xs-12\">\n");
+      out.write("                <div class=\"carousel slide\" id=\"myCarousel\">\n");
+      out.write("                    <div class=\"carousel-inner\">\n");
       out.write("              ");
 
             //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
@@ -196,15 +204,14 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
                         rs1.next();
                         if(count==0)
                         {    
-                        out.println("<div class='item active' style = 'padding-top:3%'>");
+                        out.println("<div class='item active'>");
                         }
                         else
                         {
-                           out.println("<div class='item' style = 'padding-top:3%'>"); 
+                           out.println("<div class='item'>"); 
                         }
-                        out.println("<div class='col-md-3'></div>");
-                        out.println("<div class='col-sm-6 col-md-6' align = 'center'>");
-                        out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;height:30vh'>");
+                        out.println("<div class='col-lg-2 col-xs-12' >");
+                        out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;' align='center'>");
                         out.println("<div class='caption'>");
                         out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
                         out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
@@ -237,19 +244,11 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\n");
       out.write("\t  </div>\n");
       out.write("\n");
-      out.write("\t  <!-- Controls -->\n");
-      out.write("\t  <a class=\"left carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"prev\">\n");
-      out.write("\t\t<span class=\"glyphicon glyphicon-chevron-left\"></span>\n");
-      out.write("\t  </a>\n");
-      out.write("\t  <a class=\"right carousel-control\" href=\"#carousel-example-generic\" role=\"button\" data-slide=\"next\">\n");
-      out.write("\t\t<span class=\"glyphicon glyphicon-chevron-right\"></span>\n");
-      out.write("\t  </a>\n");
       out.write("\t</div>\n");
       out.write("\t</div>\n");
       out.write("      \n");
-      out.write("        </div> \n");
-      out.write("  \n");
-      out.write("  </div>\n");
+      out.write("    </div> \n");
+      out.write("\n");
       out.write("  <div class=\"col-md-2\"></div>\n");
       out.write("\n");
       out.write("\t<div id=\"addfriendmodal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n");
@@ -473,6 +472,27 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("                document.forms[\"searchForm\"].reset();\n");
       out.write("                document.forms[\"inviteForm\"].reset();\n");
       out.write("\t});\n");
+      out.write("        \n");
+      out.write("        $('#myCarousel').carousel({\n");
+      out.write("\t\t  interval: 4000\n");
+      out.write("\t\t})\n");
+      out.write("\n");
+      out.write("\t\t$('.carousel .item').each(function(){\n");
+      out.write("\t\t  var next = $(this).next();\n");
+      out.write("\t\t  if (!next.length) {\n");
+      out.write("\t\t\tnext = $(this).siblings(':first');\n");
+      out.write("\t\t  }\n");
+      out.write("\t\t  next.children(':first-child').clone().appendTo($(this));\n");
+      out.write("\t\t  \n");
+      out.write("\t\t  for (var i=0;i<1;i++) {\n");
+      out.write("\t\t\tnext=next.next();\n");
+      out.write("\t\t\tif (!next.length) {\n");
+      out.write("\t\t\t\tnext = $(this).siblings(':first');\n");
+      out.write("\t\t\t}\n");
+      out.write("\t\t\t\n");
+      out.write("\t\t\tnext.children(':first-child').clone().appendTo($(this));\n");
+      out.write("\t\t  }\n");
+      out.write("\t\t});\n");
       out.write("        \n");
       out.write("        $(document).ready(function() {\n");
       out.write("            $('#addtaskForm').bootstrapValidator({\n");
