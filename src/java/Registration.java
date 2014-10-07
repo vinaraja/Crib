@@ -44,11 +44,11 @@ public class Registration extends HttpServlet {
         Fname = Fname.toLowerCase();
         String Lname=request.getParameter("lname").replaceAll(" ","");
         Lname = Lname.toLowerCase();
-        String Email=request.getParameter("email").replaceAll(" ","");
+        String Email=request.getParameter("remail").replaceAll(" ","");
         Email = Email.toLowerCase();
-        String user=request.getParameter("username").replaceAll(" ","");
+        String user=request.getParameter("rusername").replaceAll(" ","");
         user = user.toLowerCase();
-        String pass=request.getParameter("password").replaceAll(" ","");
+        String pass=request.getParameter("rpassword").replaceAll(" ","");
         
         try (PrintWriter out = response.getWriter()) {
             String connectionURL = "jdbc:derby://localhost:1527/WTFtask";

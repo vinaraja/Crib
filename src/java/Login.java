@@ -54,9 +54,11 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String user=request.getParameter("username").replaceAll(" ","");
+        String user=request.getParameter("lusername").replaceAll(" ","");
+        System.out.println(user);
         user = user.toLowerCase();
-        String pass=request.getParameter("password").replaceAll(" ","");
+        String pass=request.getParameter("lpassword").replaceAll(" ","");
+        System.out.println(pass);
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()){
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
