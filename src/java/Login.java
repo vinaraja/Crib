@@ -66,11 +66,16 @@ public class Login extends HttpServlet {
             String query1 = "SELECT * FROM WTFuser where username = '"+user+"'";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query1);
-            //HttpServletResponse.sendRedirect("/your/new/location.jsp")
-            while(rs.next())
+            boolean flag = rs.next();
+            if(flag==false)
             {
-                
-                if(rs.getString("password").equals(pass) && user!=null)
+                    request.setAttribute("logon","fail");
+                    RequestDispatcher rm=request.getRequestDispatcher("task_login.jsp");
+                    rm.forward(request, response);
+            }
+            else
+            {
+                if(rs.getString("password").equals(pass))
                 {
                     out.println("Welcome "+rs.getString("FirstName"));
                     request.setAttribute("Name",rs.getString("FirstName"));
@@ -81,10 +86,12 @@ public class Login extends HttpServlet {
                 }
                 else
                 {
-                    RequestDispatcher rm=request.getRequestDispatcher("faulty_login.jsp");
+                    request.setAttribute("logon","fail");
+                    RequestDispatcher rm=request.getRequestDispatcher("task_login.jsp");
                     rm.forward(request, response);
                 }
             }
+            
             st.close();
             rs.close();
             conn.close();
