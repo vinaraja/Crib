@@ -114,6 +114,85 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t.carousel-inner .prev        { left:  -33%; }\n");
       out.write("\t\t.carousel-control.left,.carousel-control.right {background-image:none;}\n");
       out.write("\t\t.col-lg-2 {width: 33%;}\n");
+      out.write("                \n");
+      out.write("                .event {\n");
+      out.write("                  width: 300px;\n");
+      out.write("                  height: 80px;\n");
+      out.write("                  background: #fff;\n");
+      out.write("                  border: 1px solid #CCC;\n");
+      out.write("                  border-radius: 2px;\n");
+      out.write("                  margin: 50px;\n");
+      out.write("                }\n");
+      out.write("                .event:before {\n");
+      out.write("                  content: '';\n");
+      out.write("                  display: block;\n");
+      out.write("                  width: 295px;\n");
+      out.write("                  height: 70px;\n");
+      out.write("                  background: #fff;\n");
+      out.write("                  border: 1px solid #CCC;\n");
+      out.write("                  border-radius: 2px; \n");
+      out.write("                  transform: rotate(2deg);\n");
+      out.write("                  position: relative;\n");
+      out.write("                  top: 12px;\n");
+      out.write("                  left: 2px;\n");
+      out.write("                  z-index: -1;\n");
+      out.write("                }\n");
+      out.write("                .event:after {\n");
+      out.write("                  content: '';\n");
+      out.write("                  display: block;\n");
+      out.write("                  width: 295px;\n");
+      out.write("                  height: 75px;\n");
+      out.write("                  background: #fff;\n");
+      out.write("                  border: 1px solid #CCC;\n");
+      out.write("                  border-radius: 2px; \n");
+      out.write("                  transform: rotate(-2deg);\n");
+      out.write("                  position: relative;\n");
+      out.write("                  top: -136px;\n");
+      out.write("                  z-index: -2;  \n");
+      out.write("                }\n");
+      out.write("                .event > span {\n");
+      out.write("                  display: block;\n");
+      out.write("                  width: 30px;\n");
+      out.write("                  background: #232323;  \n");
+      out.write("                  position: relative;\n");
+      out.write("                  top: -55px;\n");
+      out.write("                  left: -15px;\n");
+      out.write("\n");
+      out.write("                  /* Text */\n");
+      out.write("                  color: #fff;\n");
+      out.write("                  font-size: 10px;\n");
+      out.write("                  padding: 2px 7px;\n");
+      out.write("                  text-align: right;\n");
+      out.write("                }\n");
+      out.write("                .event > .info {\n");
+      out.write("                  display: inline-block;\n");
+      out.write("                  position: relative;\n");
+      out.write("                  top: -75px;\n");
+      out.write("                  left: 40px;\n");
+      out.write("\n");
+      out.write("                  /* Text */\n");
+      out.write("                  color: #232323;\n");
+      out.write("                  font-weight: 600;\n");
+      out.write("                  line-height: 25px;\n");
+      out.write("                }\n");
+      out.write("                .event > .info:first-line {\n");
+      out.write("                  text-transform: uppercase;\n");
+      out.write("                  font-size: 10px;\n");
+      out.write("                  margin: 10px 0 0 0;\n");
+      out.write("                  font-weight: 700;\n");
+      out.write("                }\n");
+      out.write("                .event > .price {\n");
+      out.write("                  display: inline-block;\n");
+      out.write("                  width: 60px;\n");
+      out.write("                  position: relative;\n");
+      out.write("                  top: -85px;\n");
+      out.write("                  left: 115px; \n");
+      out.write("\n");
+      out.write("                  /* Text */\n");
+      out.write("                  color: #E35354;\n");
+      out.write("                  text-align: center;\n");
+      out.write("                  font-weight: 700;\n");
+      out.write("                }\n");
       out.write("\t\n");
       out.write("\t</style>\n");
       out.write("    \n");
@@ -149,7 +228,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t</div><!-- /.navbar-collapse -->\n");
       out.write("\t\t  </div><!-- /.container-fluid -->\n");
       out.write("\t\t</nav>\n");
-      out.write("      <h1>Welcome ");
+      out.write("      <h1 style=\"font-face:papyrus\">Welcome ");
       out.print(request.getAttribute("Name"));
       out.write("</h1><br>\n");
       out.write("      \n");
@@ -242,12 +321,42 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
     
      
       out.write("\n");
-      out.write("\t  </div>\n");
+      out.write("\t  \n");
+      out.write("                    </div>\n");
       out.write("\n");
       out.write("\t</div>\n");
+      out.write("     \n");
       out.write("\t</div>\n");
       out.write("      \n");
       out.write("    </div> \n");
+      out.write("  <h1>Your Friends:</h1>\n");
+      out.write("  <div class=\"row\">\n");
+      out.write("      <div class=\"col-md-6\" align=\"center\">\n");
+      out.write("          ");
+
+          
+            out.println("<div class='event' align='left'>");
+            out.println("<span>#002</span>");
+            out.println("<div class='info'>");
+            out.println("<br />Vinay Rajagopalan</div></div>");
+          
+            
+      out.write("\n");
+      out.write("      </div>\n");
+      out.write("      <div class=\"col-md-6\" align=\"center\">\n");
+      out.write("          ");
+
+          
+            out.println("<div class='event' align='left'>");
+            out.println("<span>#002</span>");
+            out.println("<div class='info'>");
+            out.println("<br />Vinay Rajagopalan</div></div>");
+          
+            
+      out.write("\n");
+      out.write("      </div>\n");
+      out.write("</div>\n");
+      out.write("            \n");
       out.write("\n");
       out.write("  <div class=\"col-md-2\"></div>\n");
       out.write("\n");

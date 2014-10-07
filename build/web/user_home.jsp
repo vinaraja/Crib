@@ -71,6 +71,85 @@
 		.carousel-inner .prev        { left:  -33%; }
 		.carousel-control.left,.carousel-control.right {background-image:none;}
 		.col-lg-2 {width: 33%;}
+                
+                .event {
+                  width: 300px;
+                  height: 80px;
+                  background: #fff;
+                  border: 1px solid #CCC;
+                  border-radius: 2px;
+                  margin: 50px;
+                }
+                .event:before {
+                  content: '';
+                  display: block;
+                  width: 295px;
+                  height: 70px;
+                  background: #fff;
+                  border: 1px solid #CCC;
+                  border-radius: 2px; 
+                  transform: rotate(2deg);
+                  position: relative;
+                  top: 12px;
+                  left: 2px;
+                  z-index: -1;
+                }
+                .event:after {
+                  content: '';
+                  display: block;
+                  width: 295px;
+                  height: 75px;
+                  background: #fff;
+                  border: 1px solid #CCC;
+                  border-radius: 2px; 
+                  transform: rotate(-2deg);
+                  position: relative;
+                  top: -136px;
+                  z-index: -2;  
+                }
+                .event > span {
+                  display: block;
+                  width: 30px;
+                  background: #232323;  
+                  position: relative;
+                  top: -55px;
+                  left: -15px;
+
+                  /* Text */
+                  color: #fff;
+                  font-size: 10px;
+                  padding: 2px 7px;
+                  text-align: right;
+                }
+                .event > .info {
+                  display: inline-block;
+                  position: relative;
+                  top: -75px;
+                  left: 40px;
+
+                  /* Text */
+                  color: #232323;
+                  font-weight: 600;
+                  line-height: 25px;
+                }
+                .event > .info:first-line {
+                  text-transform: uppercase;
+                  font-size: 10px;
+                  margin: 10px 0 0 0;
+                  font-weight: 700;
+                }
+                .event > .price {
+                  display: inline-block;
+                  width: 60px;
+                  position: relative;
+                  top: -85px;
+                  left: 115px; 
+
+                  /* Text */
+                  color: #E35354;
+                  text-align: center;
+                  font-weight: 700;
+                }
 	
 	</style>
     
@@ -106,7 +185,7 @@
 			</div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->
 		</nav>
-      <h1>Welcome <%=request.getAttribute("Name")%></h1><br>
+      <h1 style="font-face:papyrus">Welcome <%=request.getAttribute("Name")%></h1><br>
       
 
       <% if ((String)request.getAttribute("send")=="yes")
@@ -193,12 +272,38 @@
        }
     
      %>
-	  </div>
+	  
+                    </div>
 
 	</div>
+     
 	</div>
       
     </div> 
+  <h1>Your Friends:</h1>
+  <div class="row">
+      <div class="col-md-6" align="center">
+          <%
+          
+            out.println("<div class='event' align='left'>");
+            out.println("<span>#002</span>");
+            out.println("<div class='info'>");
+            out.println("<br />Vinay Rajagopalan</div></div>");
+          
+            %>
+      </div>
+      <div class="col-md-6" align="center">
+          <%
+          
+            out.println("<div class='event' align='left'>");
+            out.println("<span>#002</span>");
+            out.println("<div class='info'>");
+            out.println("<br />Vinay Rajagopalan</div></div>");
+          
+            %>
+      </div>
+</div>
+            
 
   <div class="col-md-2"></div>
 
