@@ -2,31 +2,30 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+ */ 
+import com.google.gson.Gson;
+import java.io.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
+import static java.lang.System.out;
+import java.sql.*;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 /**
  *
  * @author visheshtalreja
  */
-@WebServlet(urlPatterns = {"/Registration"})
-public class Registration extends HttpServlet {
+@WebServlet(urlPatterns = {"/Check_Email"})
+public class Check_Email extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,37 +36,10 @@ public class Registration extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    @SuppressWarnings("empty-statement")
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String Fname=request.getParameter("fname").replaceAll(" ","");
-        Fname = Fname.toLowerCase();
-        String Lname=request.getParameter("lname").replaceAll(" ","");
-        Lname = Lname.toLowerCase();
-        String Email=request.getParameter("remail").replaceAll(" ","");
-        Email = Email.toLowerCase();
-        String user=request.getParameter("rusername").replaceAll(" ","");
-        user = user.toLowerCase();
-        String pass=request.getParameter("rpassword").replaceAll(" ","");
         
-        try (PrintWriter out = response.getWriter()) {
-            String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
-        try{
-            Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            Statement stmt=conn.createStatement();
-            String query2 = "INSERT INTO IS2560.WTFuser (LASTNAME,FIRSTNAME,USERNAME,EMAIL,PASSWORD) VALUES ('"+Lname+"','"+Fname+"','"+user+"','"+Email+"','"+pass+"')";
-            stmt.executeUpdate(query2);
-            stmt.close();
-            out.print("Connection Successful!");
-            RequestDispatcher rd=request.getRequestDispatcher("task_login.jsp");
-            rd.forward(request, response);
-            conn.close();
-        }
-        catch(SQLException ex)
-        {
-            out.print("Connection Failed!");
-        }
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -83,6 +55,44 @@ public class Registration extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        String email=request.getParameter("remail").replaceAll(" ","");
+        email = email.toLowerCase();
+        System.out.println(email);
+        Map<String, String> options = new LinkedHashMap<String, String>();
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        try (PrintWriter out = response.getWriter()){
+        String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
+        try{
+            
+            Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
+            String query1 = "SELECT * FROM WTFuser where email = '"+email+"'";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            //HttpServletResponse.sendRedirect("/your/new/location.jsp")
+            boolean is = rs.next();
+            if(!is) {
+                options.put("valid", "true");
+                String json = new Gson().toJson(options);
+                response.getWriter().write(json);
+            }
+            else if(is){
+                options.put("valid", "false");
+                String json = new Gson().toJson(options);
+                response.getWriter().write(json);
+            }
+            st.close();
+            rs.close();
+            conn.close();
+            
+        }
+        catch(SQLException ex)
+        {
+            out.print("Connection Failed!");
+        }
+        }
+        
+        
     }
 
     /**
