@@ -116,6 +116,13 @@
                 out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("rname")+"</strong>&nbsp;has been invited.");
                 out.println("</div>");
             }
+         if ((String)request.getAttribute("added_friend")=="true")
+         {
+             out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
+             out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+             out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("FName")+"</strong>&nbsp;has been added.");
+             out.println("</div>");
+         }
          if ((String)request.getAttribute("added")=="yes")
             {
                 out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
@@ -202,7 +209,7 @@
 
   <div class="col-md-2"></div>
 
-	<div id="addfriendmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="addfriendmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="border-radius:20px;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -210,7 +217,7 @@
 					<h3 class="modal-title" align="center">Add a Friend</h4></br>
 				
 
-                                        <form id ="searchForm" class="form-inline" align="center">
+                                        <form id ="searchForm" class="form-inline" align="center" method="get" action="New_friend">
 
 						<div class="form-group">
 							<div class="col-md-10 col-xs-10">
@@ -218,12 +225,17 @@
 							</div>
                                                      
 							<div class="col-md-1 col-xs-1" style="padding-top:2px;">
-								<button id="SearchButton" type="button">Add </button> 
-							</div>
+                                                            <button id="SearchButton" type="button" onclick="Search()"><span class="glyphicon glyphicon-search"></span> </button> 
+							</div></br> </br>
+                                                       <input type="hidden" class="form-control input-md" name = "mainuser" id="mainuser" value="<%=request.getAttribute("username")%>">
+                                                       <input type="hidden" class="form-control input-md" name = "mainuser_firstname" id="mainuser" value="<%=request.getAttribute("Name")%>">
+
+                                                       <button class="btn btn-success"  type="disable" id="addfriend" disabled >Add</button>
                                                     
-						</div><br><br>
+                                                    
+						</div><br>
                                                  
-                                                 <div id="searchUpdate"></div>
+                                                 <div id="searchUpdate" style="color:red;"></div>
 						<a align="center" id="Invite" href="#" >Can't find your friend? Invite them!</a>  
 					</form>
 					
@@ -241,20 +253,17 @@
 						<div id="break">
 							<br>
 						</div>
-						<div class="form-group">
+						<div class=>
 							<input type="text" class="form-control" name="email" Placeholder="Email address"/>
 						</div>
                                                 <div class="form-group">
                                                             <input type="hidden" class="form-control input-md" name = "user" value="<%=request.getAttribute("Name")%>">
 						</div>
-                                                <div class="form-group">
-                                                            <input type="hidden" class="form-control input-md" name = "username" value="<%=request.getAttribute("username")%>">
-						</div>
 						<div id="break">
 							<br>
 						</div>
 						<div class="form-group">
-							<button type="submit" id="login" href="#" class="btn btn-primary" align="center">Invite</button>
+							<button id="login" href="#" class="btn btn-primary" align="center">Invite</button>
 						</div><br>
 					</form>	
 				</div>
@@ -268,7 +277,7 @@
 				<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><br><br>
 						<h3 class="modal-title" align="center">Add a task</h4></br>
-						<form id="addtaskForm" class="form-inline" align="center" method="get" action="Add_Task">
+                                                            <form id="addtaskForm" class="form-inline" align="center" method="get" action="Add_Task">
 							<div class="form-group">
 								<input type="text" class="form-control" name="taskname" Placeholder="Task name" />
 								
@@ -358,6 +367,7 @@
               if(ResponseText==="true") 
               {
                    $("#searchUpdate").text("User Found");
+                    $("#addfriend").removeAttr("disabled");
               }
               else
               {
