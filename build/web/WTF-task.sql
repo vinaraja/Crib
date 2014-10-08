@@ -36,12 +36,6 @@ CONSTRAINT primary_key_friends PRIMARY KEY (mainusername,friendname)
 Alter table WTFtasks
 add column owner varchar(255)
 
-CREATE TABLE WTFuser1
-(
-UserID int,
-LastName varchar(255),
-Primary key (UserID)
-);
 
 DELETE from WTFuser;
 DELETE from WTFtasks;
@@ -61,17 +55,17 @@ DROP TABLE WTFtasks
 DROP TABLE WTFtaskallocation;
 DROP TABLE WTFFriends;
 
-INSERT INTO WTFuser VALUES ('Talreja', 'Vishesh', 'vtalreja', 'vtalreja@indiana.edu', 'firewaterthunder');
-INSERT INTO WTFuser VALUES ('talreja', 'vishesh', 'vtalrejaa', 'vtalreja@indiana.edu', 'firewaterthunder');
-INSERT INTO WTFuser VALUES ('Rajagopalan', 'Vinay', 'vinaraja', 'vinaraja@indiana.edu', 'firewaterthunder');
-INSERT INTO WTFuser VALUES ('Kanade', 'Aashish', 'akanade', 'akanade@indiana.edu', 'firewaterthunder');
+
+INSERT INTO WTFuser VALUES ('talreja', 'vishesh', 'vtalreja', 'vtalreja@indiana.edu', 'firewaterthunder');
+INSERT INTO WTFuser VALUES ('rajagopalan', 'vinay', 'vinaraja', 'vinaraja@indiana.edu', 'firewaterthunder');
+INSERT INTO WTFuser VALUES ('kanade', 'aashish', 'akanade', 'akanade@indiana.edu', 'firewaterthunder');
 
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Clean', '50', '09/10/2014', 'vtalreja');
 INSERT INTO WTFtasks(Taskname,Taskpoints,Duedate,owner) VALUES ('Cook', '50', '09/10/2014', 'vinaraja');
 
-INSERT INTO WTFtaskallocation VALUES (12,'vtalreja');
-INSERT INTO WTFtaskallocation VALUES (12,'akanade');
-INSERT INTO WTFtaskallocation VALUES (12,'vinaraja');
-INSERT INTO WTFtaskallocation VALUES (2,'vtalreja');
-INSERT INTO WTFtaskallocation VALUES (2,'akanade');
-INSERT INTO WTFtaskallocation VALUES (2,'vinaraja');
+INSERT INTO WTFtaskallocation VALUES (21,'vtalreja');
+INSERT INTO WTFtaskallocation VALUES (21,'akanade');
+INSERT INTO WTFtaskallocation VALUES (21,'vinaraja');
+INSERT INTO WTFtaskallocation VALUES (22,'vtalreja');
+INSERT INTO WTFtaskallocation VALUES (22,'akanade');
+INSERT INTO WTFtaskallocation VALUES (22,'vinaraja');

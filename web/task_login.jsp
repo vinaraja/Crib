@@ -84,6 +84,7 @@
 					<div class="win" id="log">
 						<img src="img/logo.jpg" style="height:20%;"/><br><br>
                                                 <form role="form" id="login_form" class="form-inline" method="get" action="Login">
+
 						  <div class="form-group">
 							<input type="text" name="lusername" class="form-control" id="exampleInputEmail1" placeholder="Username">
 						  </div>

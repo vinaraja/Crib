@@ -221,6 +221,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t<!-- Collect the nav links, forms, and other content for toggling -->\n");
       out.write("\t\t\t<div class=\"collapse navbar-collapse\" id=\"bs-example-navbar-collapse-1\">\n");
       out.write("\t\t\t\t\t<ul class=\"nav navbar-nav navbar-right\" >\n");
+      out.write("                                                <li id=\"group\"><a id=\"showdisplayfriendmodal\" href=\"#displayfriendmodal\" class=\"btn-group-sm\" data-toggle=\"modal\"  style=\"color:white\">Friends</a></li>\n");
       out.write("\t\t\t\t\t\t<li id=\"group\"><a id=\"showaddtaskmodal\" href=\"#addtaskmodal\" class=\"btn-group-sm\" data-toggle=\"modal\"  style=\"color:white\">Add a Task</a></li>\n");
       out.write("\t\t\t\t\t\t<li id=\"friend\"><a id=\"showaddfriendmodal\" href=\"#addfriendmodal\" class=\"btn-group-sm\" data-toggle=\"modal\" style=\"color:white\">Add a Friend</a></li>\n");
       out.write("\t\t\t\t\t\t<li ><a href=\"task_login.jsp\" class=\"btn-group-sm\" style=\"color:white\">Log Out</a></li>\n");
@@ -241,6 +242,13 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
                 out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("rname")+"</strong>&nbsp;has been invited.");
                 out.println("</div>");
             }
+         if ((String)request.getAttribute("added_friend")=="true")
+         {
+             out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
+             out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+             out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("FName")+"</strong>&nbsp;has been added.");
+             out.println("</div>");
+         }
          if ((String)request.getAttribute("added")=="yes")
             {
                 out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
@@ -257,69 +265,60 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("                    <div class=\"carousel-inner\">\n");
       out.write("              ");
 
-            //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
-            request.setAttribute("Name", request.getAttribute("Name"));
-          //String user ="vinaraja"; 
-          String user = (String)request.getAttribute("username");
-          String sql,sql3;
-          String connectionURL="jdbc:derby://localhost:1527/WTFtask";
-            sql3 ="SELECT TASKID FROM WTFtaskallocation where USERNAME = '"+user+"'";
+                  String user = (String)request.getAttribute("username");
+                  String sql,sql3;
+                  String connectionURL="jdbc:derby://localhost:1527/WTFtask";
+                  sql3 ="SELECT TASKID FROM WTFtaskallocation where USERNAME = '"+user+"'";
             
           
-          try {
-              Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-              Statement s = conn.createStatement();
-              Statement s1 = conn.createStatement();
-              Statement s2 = conn.createStatement();
-              ResultSet rs2 = s2.executeQuery(sql3);
-              int count = 0;
+                  try {
+                      Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
+                      Statement s = conn.createStatement();
+                      Statement s1 = conn.createStatement();
+                      Statement s2 = conn.createStatement();
+                      ResultSet rs2 = s2.executeQuery(sql3);
+                      int count = 0;
               
-              while(rs2.next()){
-                  sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
-                  ResultSet rs = s.executeQuery(sql);
-              while (rs.next()) {
-                  String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
-                  ResultSet rs1 = s1.executeQuery(sql2);
-                        rs1.next();
-                        if(count==0)
-                        {    
-                        out.println("<div class='item active'>");
+                      while(rs2.next()){
+                          sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
+                          ResultSet rs = s.executeQuery(sql);
+                          while (rs.next()) {
+                                String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
+                                ResultSet rs1 = s1.executeQuery(sql2);
+                                rs1.next();
+                                if(count==0)
+                                {    
+                                out.println("<div class='item active'>");
+                                }
+                                else
+                                {
+                                   out.println("<div class='item'>"); 
+                                }
+                                out.println("<div class='col-lg-2 col-xs-12' >");
+                                out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;' align='center'>");
+                                out.println("<div class='caption'>");
+                                out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
+                                out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
+                                out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
+                                out.println("</div></div></div></div>");
+                                count++;
+                                rs1.close();
+                            }
+                            rs.close();
                         }
-                        else
-                        {
-                           out.println("<div class='item'>"); 
-                        }
-                        out.println("<div class='col-lg-2 col-xs-12' >");
-                        out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;' align='center'>");
-                        out.println("<div class='caption'>");
-                        out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
-                        out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
-                        out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
-                        out.println("</div></div></div></div>");
-                        count++;
-                        
-                        /*out.println("<TR>");
-                        out.println("<TD>" + rs.getString("TASKNAME") + "</TD>");
-                        out.println("<TD>" + rs.getString("TASKPOINTS") + "</TD>");
-                        out.println("<TD>" + rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME") + "</TD>");
-                        out.println("<TD>" + rs.getString("DUEDATE") + "</TD>");
-                        out.println("</TR>");*/
-                        rs1.close();
-              }
-              rs.close();
-              }
               
-              s.close();
-              s1.close();
-              s2.close();
-              conn.close();
-          }
-          catch (SQLException e) {
-          }
-       catch (Exception e) {
-       }
-    
-     
+                        s.close();
+                        s1.close();
+                        s2.close();
+                        conn.close();
+                    }
+                    catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    
       out.write("\n");
       out.write("\t  \n");
       out.write("                    </div>\n");
@@ -329,6 +328,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t</div>\n");
       out.write("      \n");
       out.write("    </div> \n");
+      out.write("     \n");
       out.write("  <h1>Your Friends:</h1>\n");
       out.write("  <div class=\"row\">\n");
       out.write("      <div class=\"col-md-6\" align=\"center\">\n");
@@ -359,8 +359,69 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("            \n");
       out.write("\n");
       out.write("  <div class=\"col-md-2\"></div>\n");
+      out.write("<div id=\"displayfriendmodal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n");
+      out.write("\t\t<div class=\"modal-dialog modal-lg\" style=\"border-radius:20px;\">\n");
+      out.write("\t\t\t<div class=\"modal-content\">\n");
+      out.write("\t\t\t\t<div class=\"modal-header\">\n");
+      out.write("\t\t\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button><br><br>\n");
+      out.write("\t\t\t\t\t<h3 class=\"modal-title\" align=\"center\">Your Friends</h4></br>\n");
+      out.write("                                        ");
+
+                                            String user1 = (String)request.getAttribute("username");
+                                            String sql4,sql5,sql6;
+                                            String connectionURL1="jdbc:derby://localhost:1527/WTFtask";
+                                            sql4 ="SELECT * FROM WTFFriends where MAINUSERNAME = '"+user1+"'";
+                                            try {
+                                                Connection conn1 = DriverManager.getConnection(connectionURL1, "IS2560","IS2560");
+                                                Statement s4 = conn1.createStatement();
+                                                Statement s5 = conn1.createStatement();
+                                                ResultSet rs3 = s4.executeQuery(sql4);
+                                                while(rs3.next())
+                                                {
+                                                    sql5="SELECT * from WTFuser where USERNAME='"+rs3.getString("FRIENDNAME")+"'";
+                                                    ResultSet rs4 = s5.executeQuery(sql5);
+                                                    rs4.next();
+                                                    out.println("<div class='row'>");
+                                                    out.println("<div class='col-md-6' align='center'>");
+                                                    out.println("<div class='event' align='left'>");
+                                                    out.println("<span>#002</span>");
+                                                    out.println("<div class='info'>");
+                                                    out.println("<br />"+rs4.getString("FIRSTNAME")+" "+rs4.getString("LASTNAME")+"</div></div></div>");
+                                                    rs3.next();
+                                                    sql6="SELECT * from WTFuser where USERNAME='"+rs3.getString("FRIENDNAME")+"'";
+                                                    ResultSet rs5 = s5.executeQuery(sql6);
+                                                    rs5.next();
+                                                    out.println("<div class='row'>");
+                                                    out.println("<div class='col-md-6' align='center'>");
+                                                    out.println("<div class='event' align='left'>");
+                                                    out.println("<span>#002</span>");
+                                                    out.println("<div class='info'>");
+                                                    out.println("<br />"+rs5.getString("FIRSTNAME")+" "+rs5.getString("LASTNAME")+"</div></div></div>");
+                                                    s5.close();
+                                                    rs4.close();
+                                                    rs5.close();
+                                                }
+                                                rs3.close();
+                                                s4.close();
+                                                conn1.close();
+                                                
+                                            }
+                                            catch(SQLException e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                            
+                  
+                                        
+                                        
       out.write("\n");
-      out.write("\t<div id=\"addfriendmodal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n");
+      out.write("\t\t\t\t</div>\n");
+      out.write("\t\t\t</div>\n");
+      out.write("\t\t</div>\n");
+      out.write("\t</div>\n");
+      out.write("\t\n");
+      out.write("\n");
+      out.write("<div id=\"addfriendmodal\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\" aria-hidden=\"true\">\n");
       out.write("\t\t<div class=\"modal-dialog\" style=\"border-radius:20px;\">\n");
       out.write("\t\t\t<div class=\"modal-content\">\n");
       out.write("\t\t\t\t<div class=\"modal-header\">\n");
@@ -368,7 +429,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t\t\t<h3 class=\"modal-title\" align=\"center\">Add a Friend</h4></br>\n");
       out.write("\t\t\t\t\n");
       out.write("\n");
-      out.write("                                        <form id =\"searchForm\" class=\"form-inline\" align=\"center\">\n");
+      out.write("                                        <form id =\"searchForm\" class=\"form-inline\" align=\"center\" method=\"get\" action=\"New_friend\">\n");
       out.write("\n");
       out.write("\t\t\t\t\t\t<div class=\"form-group\">\n");
       out.write("\t\t\t\t\t\t\t<div class=\"col-md-10 col-xs-10\">\n");
@@ -376,12 +437,21 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t\t\t\t\t</div>\n");
       out.write("                                                     \n");
       out.write("\t\t\t\t\t\t\t<div class=\"col-md-1 col-xs-1\" style=\"padding-top:2px;\">\n");
-      out.write("\t\t\t\t\t\t\t\t<button id=\"SearchButton\" type=\"button\">Add </button> \n");
-      out.write("\t\t\t\t\t\t\t</div>\n");
+      out.write("                                                            <button id=\"SearchButton\" type=\"button\" onclick=\"Search()\"><span class=\"glyphicon glyphicon-search\"></span> </button> \n");
+      out.write("\t\t\t\t\t\t\t</div></br> </br>\n");
+      out.write("                                                       <input type=\"hidden\" class=\"form-control input-md\" name = \"mainuser\" id=\"mainuser\" value=\"");
+      out.print(request.getAttribute("username"));
+      out.write("\">\n");
+      out.write("                                                       <input type=\"hidden\" class=\"form-control input-md\" name = \"mainuser_firstname\" id=\"mainuser\" value=\"");
+      out.print(request.getAttribute("Name"));
+      out.write("\">\n");
+      out.write("\n");
+      out.write("                                                       <button class=\"btn btn-success\"  type=\"disable\" id=\"addfriend\" disabled >Add</button>\n");
       out.write("                                                    \n");
-      out.write("\t\t\t\t\t\t</div><br><br>\n");
+      out.write("                                                    \n");
+      out.write("\t\t\t\t\t\t</div><br>\n");
       out.write("                                                 \n");
-      out.write("                                                 <div id=\"searchUpdate\"></div>\n");
+      out.write("                                                 <div id=\"searchUpdate\" style=\"color:red;\"></div>\n");
       out.write("\t\t\t\t\t\t<a align=\"center\" id=\"Invite\" href=\"#\" >Can't find your friend? Invite them!</a>  \n");
       out.write("\t\t\t\t\t</form>\n");
       out.write("\t\t\t\t\t\n");
@@ -399,7 +469,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t\t\t\t<div id=\"break\">\n");
       out.write("\t\t\t\t\t\t\t<br>\n");
       out.write("\t\t\t\t\t\t</div>\n");
-      out.write("\t\t\t\t\t\t<div class=\"form-group\">\n");
+      out.write("\t\t\t\t\t\t<div class=>\n");
       out.write("\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" name=\"email\" Placeholder=\"Email address\"/>\n");
       out.write("\t\t\t\t\t\t</div>\n");
       out.write("                                                <div class=\"form-group\">\n");
@@ -416,7 +486,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t\t\t\t\t<br>\n");
       out.write("\t\t\t\t\t\t</div>\n");
       out.write("\t\t\t\t\t\t<div class=\"form-group\">\n");
-      out.write("\t\t\t\t\t\t\t<button type=\"submit\" id=\"login\" href=\"#\" class=\"btn btn-primary\" align=\"center\">Invite</button>\n");
+      out.write("\t\t\t\t\t\t\t<button type =\"submit\" id=\"login\" href=\"#\" class=\"btn btn-primary\" align=\"center\">Invite</button>\n");
       out.write("\t\t\t\t\t\t</div><br>\n");
       out.write("\t\t\t\t\t</form>\t\n");
       out.write("\t\t\t\t</div>\n");
@@ -430,7 +500,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("\t\t\t\t<div class=\"modal-header\">\n");
       out.write("\t\t\t\t\t\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\"><span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span></button><br><br>\n");
       out.write("\t\t\t\t\t\t<h3 class=\"modal-title\" align=\"center\">Add a task</h4></br>\n");
-      out.write("\t\t\t\t\t\t<form id=\"addtaskForm\" class=\"form-inline\" align=\"center\" method=\"get\" action=\"Add_Task\">\n");
+      out.write("                                                            <form id=\"addtaskForm\" class=\"form-inline\" align=\"center\" method=\"get\" action=\"Add_Task\">\n");
       out.write("\t\t\t\t\t\t\t<div class=\"form-group\">\n");
       out.write("\t\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" name=\"taskname\" Placeholder=\"Task name\" />\n");
       out.write("\t\t\t\t\t\t\t\t\n");
@@ -524,6 +594,7 @@ public final class user_005fhome_jsp extends org.apache.jasper.runtime.HttpJspBa
       out.write("              if(ResponseText===\"true\") \n");
       out.write("              {\n");
       out.write("                   $(\"#searchUpdate\").text(\"User Found\");\n");
+      out.write("                    $(\"#addfriend\").removeAttr(\"disabled\");\n");
       out.write("              }\n");
       out.write("              else\n");
       out.write("              {\n");

@@ -129,6 +129,7 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\t\t\t\t\t<div class=\"win\" id=\"log\">\n");
       out.write("\t\t\t\t\t\t<img src=\"img/logo.jpg\" style=\"height:20%;\"/><br><br>\n");
       out.write("                                                <form role=\"form\" id=\"login_form\" class=\"form-inline\" method=\"get\" action=\"Login\">\n");
+      out.write("\n");
       out.write("\t\t\t\t\t\t  <div class=\"form-group\">\n");
       out.write("\t\t\t\t\t\t\t<input type=\"text\" name=\"lusername\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Username\">\n");
       out.write("\t\t\t\t\t\t  </div>\n");

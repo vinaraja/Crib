@@ -794,7 +794,6 @@ or ant -Dj2ee.platform.classpath=&lt;server_classpath&gt; (where no properties f
         </macrodef>
     </target>
     <target name="-init-taskdefs">
-        <property name="libs.CopyLibs.classpath" value="bin/copylibstask.jar"/>
         <fail unless="libs.CopyLibs.classpath">
 The libs.CopyLibs.classpath property is not set up.
 This property must point to 
@@ -999,13 +998,23 @@ exists or setup the property manually. For example like this:
     <target depends="init,compile,compile-jsps,-pre-dist,-do-dist-with-manifest,-do-dist-without-manifest" name="do-dist"/>
     <target depends="init" if="dist.ear.dir" name="library-inclusion-in-manifest">
         <copyfiles files="${libs.JAVADB_DRIVER_LABEL.classpath}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
-        <copyfiles files="${file.reference.jstl-1.2.jar}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.gson-2.2.4.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+<<<<<<< HEAD
+=======
+        <copyfiles files="${file.reference.java-mail-1.4.4.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+        <copyfiles files="${file.reference.servlet-api.jar-1}" iftldtodir="${build.web.dir}/WEB-INF" todir="${dist.ear.dir}/lib"/>
+>>>>>>> 2adcb4448064e6db5f9bb49530eca5f2d67c9e54
         <mkdir dir="${build.web.dir}/META-INF"/>
         <manifest file="${build.web.dir}/META-INF/MANIFEST.MF" mode="update"/>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
         <copyfiles files="${libs.JAVADB_DRIVER_LABEL.classpath}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.jstl-1.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.gson-2.2.4.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
+<<<<<<< HEAD
+=======
+        <copyfiles files="${file.reference.java-mail-1.4.4.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.servlet-api.jar-1}" todir="${build.web.dir}/WEB-INF/lib"/>
+>>>>>>> 2adcb4448064e6db5f9bb49530eca5f2d67c9e54
     </target>
     <target depends="init" if="dist.ear.dir" name="-clean-webinf-lib">
         <delete dir="${build.web.dir}/WEB-INF/lib"/>

@@ -67,7 +67,7 @@ public class Search extends HttpServlet {
            try {
                Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
             Statement stmt=conn.createStatement(); 
-            String query2 ="Select * from WTFuser where USERNAME ='"+name+"'";
+            String query2 ="Select * from WTFuser where FIRSTNAME ='"+name+"'";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query2);
             //int i=1;

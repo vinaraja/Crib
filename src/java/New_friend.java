@@ -3,15 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.io.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
-import java.sql.*;
+import java.sql.Connection;
 import java.sql.DriverManager;
-import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author visheshtalreja
+ * @author vinay
  */
-@WebServlet(urlPatterns = {"/Login"})
-public class Login extends HttpServlet {
+@WebServlet(urlPatterns = {"/New_friend"})
+public class New_friend extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,11 +33,11 @@ public class Login extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @SuppressWarnings("empty-statement")
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-    }
+        }
+    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -54,56 +52,50 @@ public class Login extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-        String user=request.getParameter("lusername").replaceAll(" ","");
-        user = user.toLowerCase();
-        String pass=request.getParameter("lpassword").replaceAll(" ","");
-
         response.setContentType("text/html;charset=UTF-8");
+        String name = request.getParameter("searchname");
+        String user=request.getParameter("mainuser");
+        String firstname=request.getParameter("mainuser_firstname");
         try (PrintWriter out = response.getWriter()){
+          
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
             
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            String query1 = "SELECT * FROM WTFuser where username = '"+user+"'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query1);
-            boolean flag = rs.next();
-            if(flag==false)
-            {
-                    request.setAttribute("logon","fail");
-                    RequestDispatcher rm=request.getRequestDispatcher("task_login.jsp");
-                    rm.forward(request, response);
-            }
-            else
-            {
-                if(rs.getString("password").equals(pass))
-                {
-                    out.println("Welcome "+rs.getString("FirstName"));
-                    request.setAttribute("Name",rs.getString("FirstName"));
-                    request.setAttribute("username",rs.getString("username"));
-                    //RequestDispatcher rd=request.getRequestDispatcher("Display_User");
-                    RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
-                    rd.forward(request, response);
-                }
-                else
-                {
-                    request.setAttribute("logon","fail");
-                    RequestDispatcher rm=request.getRequestDispatcher("task_login.jsp");
-                    rm.forward(request, response);
-                }
-            }
             
+            String query1="SELECT * FROM WTFuser where FIRSTNAME = '"+name+"'";
+            
+            Statement st1 = conn.createStatement();
+            ResultSet rs = st1.executeQuery(query1);
+            System.out.println("inside last try");
+            boolean flag=rs.next();
+            System.out.println(flag+" hahahahhaha");
+            String username=rs.getString("username");
+            System.out.println(username+" blalalalla");
+            
+            String query="INSERT INTO WTFFriends (mainusername,friendname) VALUES ( '"+user+"' , '"+username+"' )";
+            
+            System.out.println("inside");
+            Statement st = conn.createStatement();
+            st.executeUpdate(query);
+            
+            request.setAttribute("Name",firstname );
+            request.setAttribute("username",user);
+            request.setAttribute("FName",name);
+            request.setAttribute("added_friend","true");
+            RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
+            rd.forward(request, response);
             st.close();
-            rs.close();
+            st1.close();
             conn.close();
             
         }
         catch(SQLException ex)
         {
-            out.print("Connection Failed!");
+            response.getWriter().write("false");
+            out.print("Connection Failed!"); 
         }
-        }
-        
+       }
         
     }
 

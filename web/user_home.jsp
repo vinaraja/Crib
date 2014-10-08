@@ -178,6 +178,7 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav navbar-right" >
+                                                <li id="group"><a id="showdisplayfriendmodal" href="#displayfriendmodal" class="btn-group-sm" data-toggle="modal"  style="color:white">Friends</a></li>
 						<li id="group"><a id="showaddtaskmodal" href="#addtaskmodal" class="btn-group-sm" data-toggle="modal"  style="color:white">Add a Task</a></li>
 						<li id="friend"><a id="showaddfriendmodal" href="#addfriendmodal" class="btn-group-sm" data-toggle="modal" style="color:white">Add a Friend</a></li>
 						<li ><a href="task_login.jsp" class="btn-group-sm" style="color:white">Log Out</a></li>
@@ -195,6 +196,13 @@
                 out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("rname")+"</strong>&nbsp;has been invited.");
                 out.println("</div>");
             }
+         if ((String)request.getAttribute("added_friend")=="true")
+         {
+             out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
+             out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+             out.println("<strong>Success!&nbsp;</strong>&nbsp;Your friend <strong>"+request.getAttribute("FName")+"</strong>&nbsp;has been added.");
+             out.println("</div>");
+         }
          if ((String)request.getAttribute("added")=="yes")
             {
                 out.println("<div class='alert alert-success alert-dismissible' role='alert'>");
@@ -209,69 +217,60 @@
                 <div class="carousel slide" id="myCarousel">
                     <div class="carousel-inner">
               <%
-            //out.println("<button type = 'button 'class = 'btn btn-primary'>Add</button>");
-            request.setAttribute("Name", request.getAttribute("Name"));
-          //String user ="vinaraja"; 
-          String user = (String)request.getAttribute("username");
-          String sql,sql3;
-          String connectionURL="jdbc:derby://localhost:1527/WTFtask";
-            sql3 ="SELECT TASKID FROM WTFtaskallocation where USERNAME = '"+user+"'";
+                  String user = (String)request.getAttribute("username");
+                  String sql,sql3;
+                  String connectionURL="jdbc:derby://localhost:1527/WTFtask";
+                  sql3 ="SELECT TASKID FROM WTFtaskallocation where USERNAME = '"+user+"'";
             
           
-          try {
-              Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-              Statement s = conn.createStatement();
-              Statement s1 = conn.createStatement();
-              Statement s2 = conn.createStatement();
-              ResultSet rs2 = s2.executeQuery(sql3);
-              int count = 0;
+                  try {
+                      Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
+                      Statement s = conn.createStatement();
+                      Statement s1 = conn.createStatement();
+                      Statement s2 = conn.createStatement();
+                      ResultSet rs2 = s2.executeQuery(sql3);
+                      int count = 0;
               
-              while(rs2.next()){
-                  sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
-                  ResultSet rs = s.executeQuery(sql);
-              while (rs.next()) {
-                  String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
-                  ResultSet rs1 = s1.executeQuery(sql2);
-                        rs1.next();
-                        if(count==0)
-                        {    
-                        out.println("<div class='item active'>");
+                      while(rs2.next()){
+                          sql = "SELECT * FROM WTFtasks where TASKID ="+rs2.getInt("TASKID");
+                          ResultSet rs = s.executeQuery(sql);
+                          while (rs.next()) {
+                                String sql2 ="SELECT FIRSTNAME,LASTNAME FROM WTFuser WHERE USERNAME='"+rs.getString("OWNER")+"'";                       
+                                ResultSet rs1 = s1.executeQuery(sql2);
+                                rs1.next();
+                                if(count==0)
+                                {    
+                                out.println("<div class='item active'>");
+                                }
+                                else
+                                {
+                                   out.println("<div class='item'>"); 
+                                }
+                                out.println("<div class='col-lg-2 col-xs-12' >");
+                                out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;' align='center'>");
+                                out.println("<div class='caption'>");
+                                out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
+                                out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
+                                out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
+                                out.println("</div></div></div></div>");
+                                count++;
+                                rs1.close();
+                            }
+                            rs.close();
                         }
-                        else
-                        {
-                           out.println("<div class='item'>"); 
-                        }
-                        out.println("<div class='col-lg-2 col-xs-12' >");
-                        out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;' align='center'>");
-                        out.println("<div class='caption'>");
-                        out.println("<h3>"+rs.getString("TASKNAME")+"</h3>");
-                        out.println("<p>POINTS: "+rs.getString("TASKPOINTS")+"<br>OWNER: "+rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME")+"<br>DUE-DATE: "+rs.getString("DUEDATE")+"</p>");
-                        out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
-                        out.println("</div></div></div></div>");
-                        count++;
-                        
-                        /*out.println("<TR>");
-                        out.println("<TD>" + rs.getString("TASKNAME") + "</TD>");
-                        out.println("<TD>" + rs.getString("TASKPOINTS") + "</TD>");
-                        out.println("<TD>" + rs1.getString("FIRSTNAME")+" "+rs1.getString("LASTNAME") + "</TD>");
-                        out.println("<TD>" + rs.getString("DUEDATE") + "</TD>");
-                        out.println("</TR>");*/
-                        rs1.close();
-              }
-              rs.close();
-              }
               
-              s.close();
-              s1.close();
-              s2.close();
-              conn.close();
-          }
-          catch (SQLException e) {
-          }
-       catch (Exception e) {
-       }
-    
-     %>
+                        s.close();
+                        s1.close();
+                        s2.close();
+                        conn.close();
+                    }
+                    catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    %>
 	  
                     </div>
 
@@ -280,42 +279,80 @@
 	</div>
       
     </div> 
-  <h1>Your Friends:</h1>
-  <div class="row">
-      <div class="col-md-6" align="center">
-          <%
-          
-            out.println("<div class='event' align='left'>");
-            out.println("<span>#002</span>");
-            out.println("<div class='info'>");
-            out.println("<br />Vinay Rajagopalan</div></div>");
-          
-            %>
-      </div>
-      <div class="col-md-6" align="center">
-          <%
-          
-            out.println("<div class='event' align='left'>");
-            out.println("<span>#002</span>");
-            out.println("<div class='info'>");
-            out.println("<br />Vinay Rajagopalan</div></div>");
-          
-            %>
-      </div>
-</div>
-            
+   
 
   <div class="col-md-2"></div>
+<div id="displayfriendmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" style="border-radius:20px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><br><br>
+					<h3 class="modal-title" align="center">Your Friends</h3></br>
+                                        <%
+                                            String user1 = (String)request.getAttribute("username");
+                                            String sql4,sql5,sql6;
+                                            String connectionURL1="jdbc:derby://localhost:1527/WTFtask";
+                                            sql4 ="SELECT * FROM WTFFriends where MAINUSERNAME = '"+user1+"'";
+                                            try {
+                                                Connection conn1 = DriverManager.getConnection(connectionURL1, "IS2560","IS2560");
+                                                Statement s4 = conn1.createStatement();
+                                                Statement s5 = conn1.createStatement();
+                                                ResultSet rs3 = s4.executeQuery(sql4);
+                                                int count1=0;
+                                                while(rs3.next())
+                                                {
+                                                    sql5="SELECT * from WTFuser where USERNAME='"+rs3.getString("FRIENDNAME")+"'";
+                                                    ResultSet rs4 = s5.executeQuery(sql5);
+                                                    rs4.next();
+                                                    count1++;
+                                                    out.println("<div class='row'>");
+                                                    out.println("<div class='col-md-6' align='center'>");
+                                                    out.println("<div class='event' align='left'>");
+                                                    out.println("<span>#00"+count1+"</span>");
+                                                    out.println("<div class='info'>");
+                                                    out.println("<br />"+rs4.getString("FIRSTNAME")+" "+rs4.getString("LASTNAME")+"</div></div></div>");
+                                                    rs3.next();
+                                                    sql6="SELECT * from WTFuser where USERNAME='"+rs3.getString("FRIENDNAME")+"'";
+                                                    ResultSet rs5 = s5.executeQuery(sql6);
+                                                    rs5.next();
+                                                    count1++;
+                                                    out.println("<div class='col-md-6' align='center'>");
+                                                    out.println("<div class='event' align='left'>");
+                                                    out.println("<span>#00"+count1+"</span>");
+                                                    out.println("<div class='info'>");
+                                                    out.println("<br />"+rs5.getString("FIRSTNAME")+" "+rs5.getString("LASTNAME")+"</div></div></div></div>");
+                                                    rs4.close();
+                                                    rs5.close();
+                                                }
+                                                s5.close();
+                                                rs3.close();
+                                                s4.close();
+                                                conn1.close();
+                                                
+                                            }
+                                            catch(SQLException e)
+                                            {
+                                                e.printStackTrace();
+                                            }
+                                            
+                  
+                                        
+                                        %>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
-	<div id="addfriendmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="addfriendmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="border-radius:20px;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><br><br>
-					<h3 class="modal-title" align="center">Add a Friend</h4></br>
+					<h3 class="modal-title" align="center">Add a Friend</h3></br>
 				
 
-                                        <form id ="searchForm" class="form-inline" align="center">
+                                        <form id ="searchForm" class="form-inline" align="center" method="get" action="New_friend">
 
 						<div class="form-group">
 							<div class="col-md-10 col-xs-10">
@@ -323,12 +360,17 @@
 							</div>
                                                      
 							<div class="col-md-1 col-xs-1" style="padding-top:2px;">
-								<button id="SearchButton" type="button">Add </button> 
-							</div>
+                                                            <button id="SearchButton" type="button" onclick="Search()"><span class="glyphicon glyphicon-search"></span> </button> 
+							</div></br> </br>
+                                                       <input type="hidden" class="form-control input-md" name = "mainuser" id="mainuser" value="<%=request.getAttribute("username")%>">
+                                                       <input type="hidden" class="form-control input-md" name = "mainuser_firstname" id="mainuser" value="<%=request.getAttribute("Name")%>">
+
+                                                       <button class="btn btn-success"  type="disable" id="addfriend" disabled >Add</button>
                                                     
-						</div><br><br>
+                                                    
+						</div><br>
                                                  
-                                                 <div id="searchUpdate"></div>
+                                                 <div id="searchUpdate" style="color:red;"></div>
 						<a align="center" id="Invite" href="#" >Can't find your friend? Invite them!</a>  
 					</form>
 					
@@ -346,7 +388,7 @@
 						<div id="break">
 							<br>
 						</div>
-						<div class="form-group">
+						<div class=>
 							<input type="text" class="form-control" name="email" Placeholder="Email address"/>
 						</div>
                                                 <div class="form-group">
@@ -359,7 +401,7 @@
 							<br>
 						</div>
 						<div class="form-group">
-							<button type="submit" id="login" href="#" class="btn btn-primary" align="center">Invite</button>
+							<button type ="submit" id="login" href="#" class="btn btn-primary" align="center">Invite</button>
 						</div><br>
 					</form>	
 				</div>
@@ -372,8 +414,8 @@
 		<div class="modal-content">
 				<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><br><br>
-						<h3 class="modal-title" align="center">Add a task</h4></br>
-						<form id="addtaskForm" class="form-inline" align="center" method="get" action="Add_Task">
+						<h3 class="modal-title" align="center">Add a task</h3></br>
+                                                            <form id="addtaskForm" class="form-inline" align="center" method="get" action="Add_Task">
 							<div class="form-group">
 								<input type="text" class="form-control" name="taskname" Placeholder="Task name" />
 								
@@ -463,6 +505,7 @@
               if(ResponseText==="true") 
               {
                    $("#searchUpdate").text("User Found");
+                    $("#addfriend").removeAttr("disabled");
               }
               else
               {
