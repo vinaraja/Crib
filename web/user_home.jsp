@@ -306,18 +306,26 @@
                                                     out.println("<span>#00"+count1+"</span>");
                                                     out.println("<div class='info'>");
                                                     out.println("<br />"+rs4.getString("FIRSTNAME")+" "+rs4.getString("LASTNAME")+"</div></div></div>");
-                                                    rs3.next();
-                                                    sql6="SELECT * from WTFuser where USERNAME='"+rs3.getString("FRIENDNAME")+"'";
-                                                    ResultSet rs5 = s5.executeQuery(sql6);
-                                                    rs5.next();
-                                                    count1++;
-                                                    out.println("<div class='col-md-6' align='center'>");
-                                                    out.println("<div class='event' align='left'>");
-                                                    out.println("<span>#00"+count1+"</span>");
-                                                    out.println("<div class='info'>");
-                                                    out.println("<br />"+rs5.getString("FIRSTNAME")+" "+rs5.getString("LASTNAME")+"</div></div></div></div>");
+                                                    boolean flag1=rs3.next();
+                                                    if(flag1==true)
+                                                    {    
+                                                        sql6="SELECT * from WTFuser where USERNAME='"+rs3.getString("FRIENDNAME")+"'";
+                                                        ResultSet rs5 = s5.executeQuery(sql6);
+                                                        rs5.next();
+                                                        count1++;
+                                                        out.println("<div class='col-md-6' align='center'>");
+                                                        out.println("<div class='event' align='left'>");
+                                                        out.println("<span>#00"+count1+"</span>");
+                                                        out.println("<div class='info'>");
+                                                        out.println("<br />"+rs5.getString("FIRSTNAME")+" "+rs5.getString("LASTNAME")+"</div></div></div></div>");
+                                                        rs5.close();
+                                                    }
+                                                    else
+                                                    {
+                                                        out.println("</div>");
+                                                    }
                                                     rs4.close();
-                                                    rs5.close();
+                                                    
                                                 }
                                                 s5.close();
                                                 rs3.close();
