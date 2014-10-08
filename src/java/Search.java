@@ -57,36 +57,81 @@ public class Search extends HttpServlet {
             throws ServletException, IOException {
         //response.setContentType("text/html;charset=UTF-8");
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-               response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
-        String name=request.getParameter("searchname");
-        name = name.toLowerCase();
-        System.out.println(name);
+        response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+        String searched_user = request.getParameter("searchname");
+        searched_user = searched_user.toLowerCase();
+        String main_username = request.getParameter("mainuser");
+        main_username = main_username.toLowerCase();
+        System.out.println("SEARCHED USER"+searched_user);
+        System.out.println("MAIN USER "+main_username);
+        String username = "";
+        //System.out.println(name);
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
            String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
            try {
                Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
             Statement stmt=conn.createStatement(); 
-            String query2 ="Select * from WTFuser where FIRSTNAME ='"+name+"'";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query2);
-            //int i=1;
-            //System.out.println(rs.getString("Firstname"));
-            boolean i=rs.next();
-            
-            if(i)
-            {
-               System.out.println(i);
-               response.getWriter().write("true"); 
+            char searcheduser[] = searched_user.toCharArray();
+            boolean isWhiteSpace = false;
+            for (int i=0;i<searcheduser.length;i++) {
+                if(searcheduser[i]==' '){
+                   isWhiteSpace = true;
+                }
+            }
+            if(isWhiteSpace) {
+                System.out.println("WHITE SPACE DETECTED");
+                System.out.println("Full name");
+                String[] parts = searched_user.split(" ");
+                String first_name = parts[0];
+                String last_name = parts[1];
+                System.out.println(first_name);
+                System.out.println(last_name);
+                String query1="SELECT * FROM WTFuser where FIRSTNAME = '"+first_name+"' AND LASTNAME = '"+last_name+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(query1);
+                boolean flag = rs.next();
+                if (flag == true){
+                    username=rs.getString("username");
+                    response.getWriter().write("true&"+username);
+                    System.out.println(username);
+                }
+                
+                rs.close();
             }
             else {
-                response.getWriter().write("false");
+                System.out.println("Either first or last");
+                String query1="SELECT * FROM WTFuser where FIRSTNAME = '"+searched_user+"'";
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(query1);
+                boolean flag1 = rs.next();
+                if(flag1 == true) { 
+                    System.out.println("Firstname pe pakda");
+                    username=rs.getString("username");
+                    System.out.println(username);
+                    response.getWriter().write("true&"+username);
+                    rs.close();
+                }
+                else {
+                    String query2="SELECT * FROM WTFuser where LASTNAME = '"+searched_user+"'";
+                    Statement st1 = conn.createStatement();
+                    ResultSet rs1 = st.executeQuery(query2);
+                    boolean flag2 = rs1.next();
+                    if (flag2 == true) {
+                        
+                        System.out.println("lastname pe pakda");
+                        username=rs1.getString("username");
+                        System.out.println(username);
+                        response.getWriter().write("true&"+username);
+                        rs1.close();
+                    }
+                   
+                    st1.close();
+                }
+                
             }
-              
             
-            // st.close();
-            //rs.close();
-            //conn.close();
+           
         }
         catch(SQLException ex)
         {

@@ -42,14 +42,6 @@
                         #break-inverse {display:initial;}
 			#break { display:none;}
                         
-                        .carousel-inner .active.left { left: -100%; }
-                        .carousel-inner .next        { left:  100%; }
-                        .carousel-inner .prev        { left:  -10   0%; }
-                        .carousel-control.left,.carousel-control.right {background-image:none;}
-                        .col-lg-2 {width: 100%;}
-                        
-                        #myCarousel {height:35vh;}
-                        .item {height:25vh;}
 		}
 			
 		body {
@@ -66,11 +58,11 @@
                             display: none; 
                 }
                 
-                .carousel-inner .active.left { left: -33%; }
-		.carousel-inner .next        { left:  33%; }
-		.carousel-inner .prev        { left:  -33%; }
+                .carousel-inner .active.left { left: -50%; }
+		.carousel-inner .next        { left:  50%; }
+		.carousel-inner .prev        { left:  -50%; }
 		.carousel-control.left,.carousel-control.right {background-image:none;}
-		.col-lg-2 {width: 33%;}
+		.col-lg-2 {width: 50%;}
 	
 	</style>
     
@@ -106,7 +98,7 @@
 			</div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->
 		</nav>
-      <h1>Welcome <%=request.getAttribute("Name")%></h1><br>
+            <h1>Welcome <%=request.getAttribute("Name")%></h1><br><br>
       
 
       <% if ((String)request.getAttribute("send")=="yes")
@@ -229,7 +221,7 @@
 							</div></br> </br>
                                                        <input type="hidden" class="form-control input-md" name = "mainuser" id="mainuser" value="<%=request.getAttribute("username")%>">
                                                        <input type="hidden" class="form-control input-md" name = "mainuser_firstname" id="mainuser" value="<%=request.getAttribute("Name")%>">
-
+                                                       <input type="hidden" class="form-control input-md" name = "searched_username" id="searched_username" >
                                                        <button class="btn btn-success"  type="disable" id="addfriend" disabled >Add</button>
                                                     
                                                     
@@ -301,7 +293,7 @@
                                                         </div><br>
                                                         <div class="form-group">
 								
-								<input type="hidden" class="form-control"  name="Name" value = "<%=request.getAttribute("Name")%>"/>
+								<input type="hidden" class="form-control" id="Name" name="Name" value = "<%=request.getAttribute("Name")%>"/>
 								<div id="break">
 									<br>
 								</div>
@@ -327,15 +319,13 @@
 								<div class="col-md-3 col-xs-3">
 									<button id="add" type="button" class="btn btn-success" onclick="showFriend()"> Add</button>	
 								</div>
-							</div>
-                                                        <div id="somediv"></div>
-							<div id="break">
-								<br>
-							</div>
+                                                        </div><br><br>
+                                                        <div id="somediv"  style="color:red;"></div>
+							
 							<div id="break-inverse">
 								<br><br>
                                                         </div>
-                                                        <div id="content" style="color:red;"></div><br>
+                                                        <div id="content"></div><br>
 							<div class="form-group">
                                                             <button type="submit" class="btn btn-primary">Add task</button><br><br>
 							</div><br>
@@ -363,37 +353,54 @@
             
 	$("#SearchButton").click(function(){
            // alert("button");
-           $.get('Search',$("#searchname"),function(ResponseText){  
-              if(ResponseText==="true") 
-              {
-                   $("#searchUpdate").text("User Found");
-                    $("#addfriend").removeAttr("disabled");
+           var searchname = $("#searchname").val();
+           var mainuser = $("#mainuser").val();
+            $.get('Search',"&searchname="+searchname+"&mainuser="+mainuser,function(ResponseText){
+              var parts = ResponseText.split("&");
+              var response = parts[0];
+              var username = parts[1];
+              if(response=="true") {
+                    $("#searchUpdate").text("User Found");
+                    $("#addfriend").removeAttr("disabled");     
               }
               else
-              {
                   $("#searchUpdate").text("User not Found");
-              }
+              $("#searched_username").attr('value',username);
            });
         });
 	
         
         function showFriend() {
-               
-		$.get('Validate_Assignee', $("#addedfriend"), function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
-                       if (responseText === "true") {
-                           $("#somediv").text("");
-                           i = i + 1;
-                           var name = document.getElementById("addedfriend").value;
-                           string = "<div id='here"+i+"' onClick='removeFriend(this)' ><input type='text' style='border:none' name='list'  value='"+name+"' />"+"&nbsp;<span class='glyphicon glyphicon-remove' style='color:#7F7F7F;'></span><br></div>";
-                           $("#content").append(string);
-                           $("#addedfriend").val('');
-                        }
-                        else {
-                           $("#somediv").text("No such user");
-                           $("#addedfriend").val('');
-                        }
-                    });
-        
+                 var addedfriend = $("#addedfriend").val();
+                 var curr_user = $("#Name").val();
+                 if (addedfriend != curr_user) {
+                    $.get('Validate_Assignee','&curr_user='+curr_user+'&addedfriend='+addedfriend, function(responseText) { // Execute Ajax GET request on URL of "someservlet" and execute the following function with Ajax response text...
+                          if (responseText === "true") {
+                              $("#somediv").text("");
+                              i = i + 1;
+                              var name = document.getElementById("addedfriend").value;
+                              string = "<div id='here"+i+"' onClick='removeFriend(this)' ><input type='text' style='border:none' name='list'  value='"+name+"' />"+"&nbsp;<span class='glyphicon glyphicon-remove' style='color:#7F7F7F;'></span><br></div>";
+                              $("#content").append(string);
+                              $("#addedfriend").val('');
+                           }
+                           else if (responseText == "false"){
+                              $("#somediv").text("Not your friend! Add him first!");
+                              $("#addedfriend").val('');
+                           }
+                           else {
+                               $("#somediv").text(responseText);
+                               $("#addedfriend").val('');  
+                           }
+                       });
+                   }
+                   else {
+                        $("#somediv").text("");
+                        i = i + 1;
+                        var name = document.getElementById("addedfriend").value;
+                        string = "<div id='here"+i+"' onClick='removeFriend(this)' ><input type='text' style='border:none' name='list'  value='"+name+"' />"+"&nbsp;<span class='glyphicon glyphicon-remove' style='color:#7F7F7F;'></span><br></div>";
+                        $("#content").append(string);
+                        $("#addedfriend").val('');
+                   }
 	}
         
 	function removeFriend(item) {
@@ -431,21 +438,13 @@
 		})
 
 		$('.carousel .item').each(function(){
-		  var next = $(this).next();
-		  if (!next.length) {
-			next = $(this).siblings(':first');
-		  }
-		  next.children(':first-child').clone().appendTo($(this));
-		  
-		  for (var i=0;i<1;i++) {
-			next=next.next();
-			if (!next.length) {
+			  var next = $(this).next();
+			  if (!next.length) {
 				next = $(this).siblings(':first');
-			}
-			
-			next.children(':first-child').clone().appendTo($(this));
-		  }
-		});
+			  }
+			  next.children(':first-child').clone().appendTo($(this));
+			  
+			});
         
         $(document).ready(function() {
             $('#addtaskForm').bootstrapValidator({

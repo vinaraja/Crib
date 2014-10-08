@@ -53,10 +53,10 @@ public class New_friend extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
-       String name = request.getParameter("searchname");
-       String user=request.getParameter("mainuser");
-        String firstname=request.getParameter("mainuser_firstname");
-       
+        String searched_username = request.getParameter("searched_username");
+        String main_username = request.getParameter("mainuser");
+        String main_user_firstname = request.getParameter("mainuser_firstname");
+
        //System.out.println(user);
        try (PrintWriter out = response.getWriter()){
           
@@ -64,32 +64,23 @@ public class New_friend extends HttpServlet {
         try{
             
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            
-            String query1="SELECT * FROM WTFuser where FIRSTNAME = '"+name+"'";
-            
-            Statement st1 = conn.createStatement();
-            ResultSet rs = st1.executeQuery(query1);
-            System.out.println("inside last try");
-            boolean flag=rs.next();
-            System.out.println(flag+" hahahahhaha");
-            String username=rs.getString("username");
-            System.out.println(username+" blalalalla");
-            
-            String query="INSERT INTO WTFFriends (mainusername,friendname) VALUES ( '"+user+"' , '"+username+"' )";
-            
-            System.out.println("inside");
+            String query="INSERT INTO IS2560.WTFFriends (mainusername,friendname) VALUES ( '"+main_username+"' , '"+searched_username+"' )";
             Statement st = conn.createStatement();
-              st.executeUpdate(query);
-            
-               request.setAttribute("Name",firstname );
-               request.setAttribute("username",user);
-               request.setAttribute("FName",name);
-            RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp");
-            
+            st.executeUpdate(query);
+            Statement st1 = conn.createStatement();
+            String query2 = "SELECT * FROM IS2560.WTFuser WHERE username='"+searched_username+"'";
+            ResultSet rs = st1.executeQuery(query2);
+            boolean is = rs.next();
+            String searched_user_firstname = rs.getString("Firstname");
+            System.out.println(searched_user_firstname);
+            request.setAttribute("FName",searched_user_firstname);
+            request.setAttribute("Name",main_user_firstname);
+            request.setAttribute("username",main_username);
             request.setAttribute("added_friend","true");
+            RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp"); 
             rd.forward(request, response);
+            rs.close();
             st.close();
-            st1.close();
             conn.close();
             
         }

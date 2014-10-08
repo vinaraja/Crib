@@ -64,28 +64,50 @@ public class Validate_Assignee extends HttpServlet {
         
         response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
         response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+        String adder = request.getParameter("curr_user").replaceAll(" ","");
+        adder = adder.toLowerCase();
+        String addedfriend = request.getParameter("addedfriend").replaceAll(" ","");
+        addedfriend = addedfriend.toLowerCase();
         
-        String user = request.getParameter("addedfriend").replaceAll(" ","");
-        user = user.toLowerCase();
+        
         try (PrintWriter out = response.getWriter()){
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
-            
+
             Connection conn = DriverManager.getConnection(connectionURL, "IS2560","IS2560");
-            String query1 = "SELECT * FROM WTFuser where Firstname = '"+user+"'";
+            String query1 = "SELECT * FROM WTFuser where Firstname = '"+adder+"'";
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery(query1);
-            boolean is = rs.next();
-            System.out.println(is);
+            boolean scam = rs.next();
+            String adder_username = rs.getString("username");
+            System.out.println("Adder username = "+adder_username);
+            String query2 = "SELECT * FROM WTFFriends where mainusername = '"+adder_username+"'";
+            ResultSet rs1 = st.executeQuery(query2);
+            boolean is = rs1.next();
             
             if (!is) {
-                response.getWriter().write("false");
+                
+                response.getWriter().write("Add friends first!");
             }
-            else if(is) {
-                response.getWriter().write("true");
+            else {
+                
+                String query3 = "SELECT * FROM WTFFriends where mainusername = '"+adder_username+"' AND friendname IN (Select username FROM WTFuser WHERE Firstname = '"+addedfriend+"')";
+                ResultSet rs2 = st.executeQuery(query3);
+                boolean is1 = rs2.next();
+                System.out.println(is1);
+                if (is1) {
+                    response.getWriter().write("true");
+                }
+                else
+                    response.getWriter().write("false");
+                rs2.close();
             }
+            
+            
             st.close();
             rs.close();
+            rs1.close();
+            
             conn.close();
             
         }
