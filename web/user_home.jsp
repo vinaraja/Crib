@@ -273,7 +273,61 @@
      
 	</div>
       
-    </div> 
+    </div>
+                    
+    <div class="col-md-12">
+            <div class="col-md-4 col-md-offset-4 text-center"><h4><a  href="#myCarousel1" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>&nbsp;Tasks you own&nbsp;<a  href="#myCarousel1" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a></h4></div>
+            <div class="col-md-12 col-xs-12">
+                <div class="carousel slide" id="myCarousel1">
+                    <div class="carousel-inner">
+              <%
+                  String user2 = (String)request.getAttribute("username");
+                  String sql7;
+                  String connectionURL2="jdbc:derby://localhost:1527/WTFtask";
+                  sql7 ="SELECT * FROM WTFtasks WHERE OWNER  = '"+user2+"'";
+                  try {
+                      Connection conn2 = DriverManager.getConnection(connectionURL2, "IS2560","IS2560");
+                      Statement s6 = conn2.createStatement();
+                      ResultSet rs8 = s6.executeQuery(sql7);
+                      int count2 = 0;
+              
+                      while(rs8.next()){
+                         
+                                if(count2==0)
+                                {    
+                                out.println("<div class='item active'>");
+                                }
+                                else
+                                {
+                                   out.println("<div class='item'>"); 
+                                }
+                                out.println("<div class='col-lg-2 col-xs-12' >");
+                                out.println("<div class='thumbnail' style = 'background-color:#E6E6E6;color:white;' align='center'>");
+                                out.println("<div class='caption'>");
+                                out.println("<h3>"+rs8.getString("TASKNAME")+"</h3>");
+                                out.println("<p>POINTS: "+rs8.getString("TASKPOINTS")+"<br>DUE-DATE: "+rs8.getString("DUEDATE")+"</p>");
+                                out.println("<p><a href='#' class='btn btn-primary' role='button'>Wrap Up</a></p>");
+                                out.println("</div></div></div></div>");
+                                count2++;
+                                
+                        }
+                        rs8.close();
+                        s6.close();
+                        conn2.close();
+                    }
+                    catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    
+                    %>
+	  
+                    </div>
+
+	</div>
+     
+	</div>
+      
+    </div>
    
 
   <div class="col-md-2"></div>
