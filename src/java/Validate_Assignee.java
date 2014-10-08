@@ -68,7 +68,8 @@ public class Validate_Assignee extends HttpServlet {
         adder = adder.toLowerCase();
         String addedfriend = request.getParameter("addedfriend").replaceAll(" ","");
         addedfriend = addedfriend.toLowerCase();
-        
+        System.out.println(adder);
+        System.out.println(addedfriend);
         
         try (PrintWriter out = response.getWriter()){
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";

@@ -3,6 +3,10 @@ package org.apache.jsp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
+import java.util.*;
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
 
 public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -41,6 +45,10 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       _jspx_out = out;
       _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
 
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
       out.write("\n");
       out.write("\n");
       out.write("\n");
@@ -108,11 +116,20 @@ public final class task_005flogin_jsp extends org.apache.jasper.runtime.HttpJspB
       out.write("\t\t<div class=\"col-md-4\"></div>\n");
       out.write("\t\t<div class=\"col-md-4\">\n");
       out.write("\t\t\n");
+      out.write("            ");
+ if ((String)request.getAttribute("logon")=="fail")
+            {
+                out.println("<div class='alert alert-danger alert-dismissible' role='alert'>");
+                out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+                out.println("<strong>The entered username or password is incorrect</strong>");
+                out.println("</div>");
+            }
+      out.write("\n");
       out.write("\t\t\n");
       out.write("\t\t\t\t\t<div class=\"win\" id=\"log\">\n");
       out.write("\t\t\t\t\t\t<img src=\"img/logo.jpg\" style=\"height:20%;\"/><br><br>\n");
       out.write("                                                <form role=\"form\" id=\"login_form\" class=\"form-inline\" method=\"get\" action=\"Login\">\n");
-      out.write("                                                     \n");
+      out.write("\n");
       out.write("\t\t\t\t\t\t  <div class=\"form-group\">\n");
       out.write("\t\t\t\t\t\t\t<input type=\"text\" name=\"lusername\" class=\"form-control\" id=\"exampleInputEmail1\" placeholder=\"Username\">\n");
       out.write("\t\t\t\t\t\t  </div>\n");

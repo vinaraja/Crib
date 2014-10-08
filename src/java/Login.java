@@ -57,6 +57,7 @@ public class Login extends HttpServlet {
         String user=request.getParameter("lusername").replaceAll(" ","");
         user = user.toLowerCase();
         String pass=request.getParameter("lpassword").replaceAll(" ","");
+
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()){
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";

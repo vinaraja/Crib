@@ -36,12 +36,6 @@ CONSTRAINT primary_key_friends PRIMARY KEY (mainusername,friendname)
 Alter table WTFtasks
 add column owner varchar(255)
 
-CREATE TABLE WTFuser1
-(
-UserID int,
-LastName varchar(255),
-Primary key (UserID)
-);
 
 DELETE from WTFuser;
 DELETE from WTFtasks;
@@ -61,8 +55,8 @@ DROP TABLE WTFtasks
 DROP TABLE WTFtaskallocation;
 DROP TABLE WTFFriends;
 
-INSERT INTO WTFuser VALUES ('talreja', 'Vishesh', 'vtalreja', 'vtalreja@indiana.edu', 'firewaterthunder');
-INSERT INTO WTFuser VALUES ('talreja', 'vishesh', 'vtalrejaa', 'vtalreja@indiana.edu', 'firewaterthunder');
+
+INSERT INTO WTFuser VALUES ('talreja', 'vishesh', 'vtalreja', 'vtalreja@indiana.edu', 'firewaterthunder');
 INSERT INTO WTFuser VALUES ('rajagopalan', 'vinay', 'vinaraja', 'vinaraja@indiana.edu', 'firewaterthunder');
 INSERT INTO WTFuser VALUES ('kanade', 'aashish', 'akanade', 'akanade@indiana.edu', 'firewaterthunder');
 
@@ -77,3 +71,4 @@ INSERT INTO WTFtaskallocation VALUES (19,'vinaraja');
 
 INSERT INTO WTFFriends VALUES('akanade','vtalreja');
 INSERT INTO WTFFriends VALUES('akanade','vinaraja');
+

@@ -53,12 +53,14 @@ public class New_friend extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
         response.setContentType("text/html;charset=UTF-8");
+
         String searched_username = request.getParameter("searched_username");
         String main_username = request.getParameter("mainuser");
         String main_user_firstname = request.getParameter("mainuser_firstname");
 
        //System.out.println(user);
        try (PrintWriter out = response.getWriter()){
+
           
         String connectionURL = "jdbc:derby://localhost:1527/WTFtask";
         try{
@@ -67,6 +69,7 @@ public class New_friend extends HttpServlet {
             String query="INSERT INTO IS2560.WTFFriends (mainusername,friendname) VALUES ( '"+main_username+"' , '"+searched_username+"' )";
             Statement st = conn.createStatement();
             st.executeUpdate(query);
+
             Statement st1 = conn.createStatement();
             String query2 = "SELECT * FROM IS2560.WTFuser WHERE username='"+searched_username+"'";
             ResultSet rs = st1.executeQuery(query2);
@@ -76,8 +79,11 @@ public class New_friend extends HttpServlet {
             request.setAttribute("FName",searched_user_firstname);
             request.setAttribute("Name",main_user_firstname);
             request.setAttribute("username",main_username);
+
             request.setAttribute("added_friend","true");
+
             RequestDispatcher rd=request.getRequestDispatcher("user_home.jsp"); 
+
             rd.forward(request, response);
             rs.close();
             st.close();

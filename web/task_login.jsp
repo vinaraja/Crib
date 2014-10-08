@@ -5,6 +5,10 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="java.io.*" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="javax.servlet.*" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <html lang="en">
   <head>
@@ -69,11 +73,18 @@
 		<div class="col-md-4"></div>
 		<div class="col-md-4">
 		
+            <% if ((String)request.getAttribute("logon")=="fail")
+            {
+                out.println("<div class='alert alert-danger alert-dismissible' role='alert'>");
+                out.println("<button type='button' class='close' data-dismiss='alert'><span aria-hidden='true'>&times;</span><span class='sr-only'>Close</span></button>");
+                out.println("<strong>The entered username or password is incorrect</strong>");
+                out.println("</div>");
+            }%>
 		
 					<div class="win" id="log">
 						<img src="img/logo.jpg" style="height:20%;"/><br><br>
                                                 <form role="form" id="login_form" class="form-inline" method="get" action="Login">
-                                                     
+
 						  <div class="form-group">
 							<input type="text" name="lusername" class="form-control" id="exampleInputEmail1" placeholder="Username">
 						  </div>
